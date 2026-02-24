@@ -9,14 +9,14 @@ function Navbar() {
         <div className="flex flex-col justify-center gap-2">
           <div className="flex align-middle justify-end gap-2">
             <Switch />
-            <span className="text-sm self-center">Dark mode</span>
+            <span className="text-sm self-center font-medium">Dark mode</span>
           </div>
           <nav className="flex gap-4">
-            <Button variant="outline">Ulubione</Button>
-            <Button variant="outline">Arena</Button>
-            <Button variant="outline">Ranking</Button>
-            <Button variant="outline">Edycja</Button>
-            <Button variant="outline">Wyloguj</Button>
+            <Button variant="solid">Ulubione</Button>
+            <Button variant="solid">Arena</Button>
+            <Button variant="solid">Ranking</Button>
+            <Button variant="solid">Edycja</Button>
+            <Button variant="solid">Wyloguj</Button>
           </nav>
         </div>
       </header>

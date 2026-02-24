@@ -21,7 +21,7 @@ export default {
         primary: {
           default: "#facc15",
           dark: "#eab308",
-          light: "#fef08a",
+          light: "#fde047",
           foreground: "#030712",
         },
       },
@@ -29,7 +29,7 @@ export default {
         primary: {
           default: "#facc15",
           dark: "#eab308",
-          light: "#fef08a",
+          light: "#fde047",
           foreground: "#030712",
         },
       },
