@@ -15,5 +15,24 @@ export default {
     extend: {},
   },
 
-  plugins: [mtConfig],
+  plugins: [
+    mtConfig({
+      colors: {
+        primary: {
+          default: "#facc15",
+          dark: "#eab308",
+          light: "#fef08a",
+          foreground: "#030712",
+        },
+      },
+      darkColors: {
+        primary: {
+          default: "#facc15",
+          dark: "#eab308",
+          light: "#fef08a",
+          foreground: "#030712",
+        },
+      },
+    }),
+  ],
 };
