@@ -6,13 +6,17 @@ import { NavArrowDown } from "iconoir-react";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(
+    () => localStorage.getItem("isDark") === "true",
+  );
 
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add("dark");
+      localStorage.setItem("isDark", "true");
     } else {
       document.documentElement.classList.remove("dark");
+      localStorage.setItem("isDark", "false");
     }
   }, [isDark]);
 
