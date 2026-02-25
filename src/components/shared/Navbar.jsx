@@ -1,10 +1,12 @@
 import logo from "../../icons/logo.png";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { Button, Switch } from "@material-tailwind/react";
 import { Collapse, List } from "@material-tailwind/react";
 import { NavArrowDown } from "iconoir-react";
 
 function Navbar() {
+  const [isLogged, setIsLogged] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("isDark") === "true",
@@ -38,11 +40,35 @@ function Navbar() {
           </List.Item>
           <Collapse open={isOpen}>
             <List className="min-w-48">
-              <List.Item>Ulubione</List.Item>
-              <List.Item>Arena</List.Item>
-              <List.Item>Ranking</List.Item>
-              <List.Item>Edycja</List.Item>
-              <List.Item>Wyloguj</List.Item>
+              {isLogged ? (
+                <>
+                  <Link>
+                    <List.Item>Ulubione</List.Item>
+                  </Link>
+                  <Link>
+                    <List.Item>Arena</List.Item>
+                  </Link>
+                  <Link>
+                    <List.Item>Ranking</List.Item>
+                  </Link>
+                  <Link>
+                    <List.Item>Edycja</List.Item>
+                  </Link>
+                  <Link>
+                    <List.Item>Wyloguj</List.Item>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="login">
+                    <List.Item>Zaloguj</List.Item>
+                  </Link>
+                  <Link to="register">
+                    <List.Item>Zarejestruj</List.Item>
+                  </Link>
+                </>
+              )}
+
               <List.Item>
                 <Switch
                   checked={isDark}
@@ -63,11 +89,34 @@ function Navbar() {
             />
           </div>
           <nav className="hidden sm:flex gap-4">
-            <Button variant="solid">Ulubione</Button>
-            <Button variant="solid">Arena</Button>
-            <Button variant="solid">Ranking</Button>
-            <Button variant="solid">Edycja</Button>
-            <Button variant="solid">Wyloguj</Button>
+            {isLogged ? (
+              <>
+                <Link>
+                  <Button variant="solid">Ulubione</Button>
+                </Link>
+                <Link>
+                  <Button variant="solid">Arena</Button>
+                </Link>
+                <Link>
+                  <Button variant="solid">Ranking</Button>
+                </Link>
+                <Link>
+                  <Button variant="solid">Edycja</Button>
+                </Link>
+                <Link>
+                  <Button variant="solid">Wyloguj</Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="login">
+                  <Button variant="solid">Zaloguj</Button>
+                </Link>
+                <Link to="register">
+                  <Button variant="solid">Zarejestruj</Button>
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </header>
