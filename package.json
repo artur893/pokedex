@@ -13,7 +13,8 @@
     "@material-tailwind/react": "^3.0.0-beta.24",
     "iconoir-react": "^7.11.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router": "^7.13.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
