@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider } from "@material-tailwind/react";
 import { BrowserRouter, Routes, Route } from "react-router";
+import { SnackbarProvider } from "notistack";
 import "./index.css";
 import App from "./App.jsx";
 import Register from "./components/subpages/Register.jsx";
@@ -11,12 +12,14 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Route>
-        </Routes>
+        <SnackbarProvider maxSnack={3}>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+            </Route>
+          </Routes>
+        </SnackbarProvider>
       </BrowserRouter>
     </ThemeProvider>
   </StrictMode>,
