@@ -16,6 +16,30 @@
       "email": "asda@dsa.pl",
       "password": "asAS12!@",
       "id": 3
+    },
+    {
+      "name": "Artur",
+      "email": "as@wp.pl",
+      "password": "asAS12!@",
+      "id": 4
+    },
+    {
+      "name": "Artur",
+      "email": "as@wp.pl",
+      "password": "asAS12!@",
+      "id": 5
+    },
+    {
+      "name": "Artur",
+      "email": "as@wp.pl",
+      "password": "asAS12!@",
+      "id": 6
+    },
+    {
+      "name": "Artur2",
+      "email": "as@wp.pll",
+      "password": "asAS12!@",
+      "id": 7
     }
   ]
 }

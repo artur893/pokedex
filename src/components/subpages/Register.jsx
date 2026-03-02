@@ -4,7 +4,7 @@ import usePost from "../../hooks/usePost";
 import { useSnackbar } from "notistack";
 
 function Register() {
-  const { post, data, isLoading } = usePost("http://localhost:3001/users");
+  const { post, isLoading } = usePost("http://localhost:3001/users");
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -20,16 +20,30 @@ function Register() {
   });
 
   const onSubmit = async (formData) => {
-    const response = await post({
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    });
-    console.log(response, data);
-    if (!response) {
-      enqueueSnackbar("Coś poszło nie tak", { variant: "error" });
-    } else {
-      enqueueSnackbar("Pomyślnie utworzono konto", { variant: "success" });
+    const isNameResponse = await fetch(
+      `http://localhost:3001/users?name=${formData.name}`,
+    );
+    const isNameExist = await isNameResponse.json();
+    const isEmailResponse = await fetch(
+      `http://localhost:3001/users?email=${formData.email}`,
+    );
+    const isEmailExist = await isEmailResponse.json();
+
+    if (isNameExist.length === 0 && isEmailExist.length === 0) {
+      const response = await post({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      if (!response) {
+        enqueueSnackbar("Coś poszło nie tak", { variant: "error" });
+      } else {
+        enqueueSnackbar("Pomyślnie utworzono konto", { variant: "success" });
+      }
+    } else if (isNameExist.length > 0) {
+      enqueueSnackbar("Login jest zajęty", { variant: "error" });
+    } else if (isEmailExist.length > 0) {
+      enqueueSnackbar("Email jest zajęty", { variant: "error" });
     }
   };
   return (
