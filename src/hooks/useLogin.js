@@ -42,6 +42,11 @@ function useLogin() {
     } catch (error) {
       console.error(error);
       setIsError(true);
+      return {
+        ok: false,
+        message: error,
+        variant: "error",
+      };
     } finally {
       setIsLoading(false);
     }
