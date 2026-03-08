@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Register from "./components/subpages/Register.jsx";
 import Login from "./components/subpages/Login.jsx";
+import Home from "./components/subpages/Home.jsx";
 import { LoginProvider } from "./context/LoginContext.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="/" element={<App />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/home" element={<Home />} />
               </Route>
             </Routes>
           </SnackbarProvider>

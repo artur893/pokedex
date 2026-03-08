@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { Button, Switch } from "@material-tailwind/react";
 import { Collapse, List } from "@material-tailwind/react";
 import { NavArrowDown } from "iconoir-react";
+import { FaUser } from "react-icons/fa";
 import { LoginContext } from "../../context/LoginContext";
 
 function Navbar() {
@@ -23,16 +24,22 @@ function Navbar() {
     }
   }, [isDark]);
 
+  const logout = () => {
+    setUser(null);
+  };
+
   return (
     <>
       <header className="flex justify-between p-4">
-        <img src={logo} alt="pokemon-logo" className="h-10 sm:h-20" />
+        <Link to="home">
+          <img src={logo} alt="pokemon-logo" className="h-10 sm:h-20" />
+        </Link>
         <List className="sm:hidden min-w-48">
           <List.Item
             onClick={() => setIsOpen((prev) => !prev)}
             className="w-48"
           >
-            Menu
+            {user ? user.name : "Menu"}
             <List.ItemEnd>
               <NavArrowDown
                 className={`h-5 w-5 stroke-[1.5] ${isOpen ? "rotate-180" : ""}`}
@@ -55,8 +62,8 @@ function Navbar() {
                   <Link>
                     <List.Item>Edycja</List.Item>
                   </Link>
-                  <Link>
-                    <List.Item onClick={() => setUser(null)}>Wyloguj</List.Item>
+                  <Link to="login">
+                    <List.Item onClick={logout}>Wyloguj</List.Item>
                   </Link>
                 </>
               ) : (
@@ -88,6 +95,13 @@ function Navbar() {
               checked={isDark}
               onChange={() => setIsDark((prev) => !prev)}
             />
+            {user ? (
+              <span className="flex items-center gap-1 text-sm self-center font-bold ml-8">
+                <FaUser /> {user.name}
+              </span>
+            ) : (
+              ""
+            )}
           </div>
           <nav className="hidden sm:flex gap-4">
             {user ? (
@@ -104,8 +118,8 @@ function Navbar() {
                 <Link>
                   <Button variant="solid">Edycja</Button>
                 </Link>
-                <Link>
-                  <Button variant="solid" onClick={() => setUser(null)}>
+                <Link to="login">
+                  <Button variant="solid" onClick={logout}>
                     Wyloguj
                   </Button>
                 </Link>

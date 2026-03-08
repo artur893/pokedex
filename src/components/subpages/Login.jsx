@@ -4,16 +4,24 @@ import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect } from "react";
 import { LoginContext } from "../../context/LoginContext";
+import { useNavigate } from "react-router";
 
 function Login() {
   const { login, loggedUser, isLoading } = useLogin();
   const { register, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const { setUser } = useContext(LoginContext);
+  const navigate = useNavigate();
 
   const onSubmit = async (formData) => {
-    const { message, variant } = await login(formData.login, formData.password);
+    const { message, variant, ok } = await login(
+      formData.login,
+      formData.password,
+    );
     enqueueSnackbar(message, { variant: variant });
+    if (ok) {
+      navigate("/home");
+    }
   };
 
   useEffect(() => {
