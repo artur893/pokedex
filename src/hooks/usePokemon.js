@@ -17,7 +17,7 @@ function usePokemon() {
           const pokemonObj = {
             id: pokemon.id,
             name: pokemon.name,
-            photo: pokemon.sprites.back_default,
+            photo: pokemon.sprites.other["official-artwork"].front_default,
             exp: pokemon.base_experience,
             height: pokemon.height,
             weight: pokemon.weight,
