@@ -3,12 +3,24 @@ import { PokemonContext } from "../../context/PokemonContext";
 import usePokemon from "../../hooks/usePokemon";
 
 function Home() {
-  const { pokemonsData, setPokemonsData } = useContext(PokemonContext);
-  const { pokemons } = usePokemon();
+  const { pokemonsContextData, setPokemonsContextData } =
+    useContext(PokemonContext);
+  const { pokemons, isLoading, isError } = usePokemon();
 
   useEffect(() => {
-    console.log(pokemons);
-  }, [pokemons]);
+    setPokemonsContextData(pokemons);
+  }, []);
+
+  if (isLoading)
+    return (
+      <p className="flex-1 flex justify-center items-center">
+        Ładowanie danych...
+      </p>
+    );
+  if (isError)
+    return (
+      <p className="flex-1 flex justify-center items-center">Wystąpił błąd</p>
+    );
 
   return <></>;
 }
