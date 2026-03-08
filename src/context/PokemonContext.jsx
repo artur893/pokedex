@@ -3,10 +3,12 @@ import { createContext, useState } from "react";
 export const PokemonContext = createContext();
 
 export function PokemonProvider({ children }) {
-  const [pokemonsData, setPokemonsData] = useState([]);
+  const [pokemonsContextData, setPokemonsContextData] = useState([]);
 
   return (
-    <PokemonContext.Provider value={{ pokemonsData, setPokemonsData }}>
+    <PokemonContext.Provider
+      value={{ pokemonsContextData, setPokemonsContextData }}
+    >
       {children}
     </PokemonContext.Provider>
   );
