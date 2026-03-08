@@ -9,21 +9,24 @@ import Register from "./components/subpages/Register.jsx";
 import Login from "./components/subpages/Login.jsx";
 import Home from "./components/subpages/Home.jsx";
 import { LoginProvider } from "./context/LoginContext.jsx";
+import { PokemonProvider } from "./context/PokemonContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
       <BrowserRouter>
         <LoginProvider>
-          <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-            <Routes>
-              <Route path="/" element={<App />}>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/home" element={<Home />} />
-              </Route>
-            </Routes>
-          </SnackbarProvider>
+          <PokemonProvider>
+            <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+              <Routes>
+                <Route path="/" element={<App />}>
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/home" element={<Home />} />
+                </Route>
+              </Routes>
+            </SnackbarProvider>
+          </PokemonProvider>
         </LoginProvider>
       </BrowserRouter>
     </ThemeProvider>
