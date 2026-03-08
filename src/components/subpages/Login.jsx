@@ -2,16 +2,24 @@ import { Button, Input } from "@material-tailwind/react";
 import useLogin from "../../hooks/useLogin";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
+import { useContext, useEffect } from "react";
+import { LoginContext } from "../../context/LoginContext";
 
 function Login() {
-  const { login, user, isLoading } = useLogin();
+  const { login, loggedUser, isLoading } = useLogin();
   const { register, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const { setUser } = useContext(LoginContext);
 
   const onSubmit = async (formData) => {
     const { message, variant } = await login(formData.login, formData.password);
     enqueueSnackbar(message, { variant: variant });
   };
+
+  useEffect(() => {
+    setUser(loggedUser);
+  }, [loggedUser, setUser]);
+
   return (
     <>
       {isLoading ? (

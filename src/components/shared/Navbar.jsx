@@ -1,16 +1,17 @@
 import logo from "../../icons/logo.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Button, Switch } from "@material-tailwind/react";
 import { Collapse, List } from "@material-tailwind/react";
 import { NavArrowDown } from "iconoir-react";
+import { LoginContext } from "../../context/LoginContext";
 
 function Navbar() {
-  const [isLogged, setIsLogged] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("isDark") === "true",
   );
+  const { user, setUser } = useContext(LoginContext);
 
   useEffect(() => {
     if (isDark) {
@@ -40,7 +41,7 @@ function Navbar() {
           </List.Item>
           <Collapse open={isOpen}>
             <List className="min-w-48">
-              {isLogged ? (
+              {user ? (
                 <>
                   <Link>
                     <List.Item>Ulubione</List.Item>
@@ -55,7 +56,7 @@ function Navbar() {
                     <List.Item>Edycja</List.Item>
                   </Link>
                   <Link>
-                    <List.Item>Wyloguj</List.Item>
+                    <List.Item onClick={() => setUser(null)}>Wyloguj</List.Item>
                   </Link>
                 </>
               ) : (
@@ -89,7 +90,7 @@ function Navbar() {
             />
           </div>
           <nav className="hidden sm:flex gap-4">
-            {isLogged ? (
+            {user ? (
               <>
                 <Link>
                   <Button variant="solid">Ulubione</Button>
@@ -104,7 +105,9 @@ function Navbar() {
                   <Button variant="solid">Edycja</Button>
                 </Link>
                 <Link>
-                  <Button variant="solid">Wyloguj</Button>
+                  <Button variant="solid" onClick={() => setUser(null)}>
+                    Wyloguj
+                  </Button>
                 </Link>
               </>
             ) : (

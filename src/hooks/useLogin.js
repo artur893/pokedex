@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function useLogin() {
-  const [user, setUser] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -33,7 +33,7 @@ function useLogin() {
           variant: "error",
         };
       }
-      setUser(userRecord);
+      setLoggedUser(userRecord);
       return {
         ok: true,
         message: "Pomyślnie zalogowano",
@@ -51,7 +51,7 @@ function useLogin() {
       setIsLoading(false);
     }
   }
-  return { login, user, isLoading, isError };
+  return { login, loggedUser, isLoading, isError };
 }
 
 export default useLogin;
