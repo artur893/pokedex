@@ -2,11 +2,13 @@ import { Button, IconButton } from "@material-tailwind/react";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 
 function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
+  const range = window.innerWidth < 426 ? 1 : window.innerWidth < 769 ? 2 : 3;
+
   const totalPages = Math.ceil(totalItems / itemsOnPage);
   function populateButtons() {
     const buttons = [];
     for (let i = 1; i <= totalPages; i++) {
-      if (i >= activePage - 2 && i <= activePage + 2) {
+      if (i >= activePage - range && i <= activePage + range) {
         buttons.push(
           <IconButton
             key={i}
