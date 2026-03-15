@@ -4,14 +4,21 @@ import usePokemon from "../../hooks/usePokemon";
 import PokemonCard from "../shared/PokemonCard";
 import Pagination from "../shared/Pagination";
 import { Input } from "@material-tailwind/react";
+import { useSearchParams } from "react-router";
 
 function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromUrl = Number(searchParams.get("page")) || 1;
   const { pokemonsContextData, setPokemonsContextData } =
     useContext(PokemonContext);
   const { pokemons, isLoading, isError } = usePokemon();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(pageFromUrl);
   const [search, setSearch] = useState("");
   const itemsOnPage = 15;
+
+  useEffect(() => {
+    setSearchParams({ page });
+  }, [page, setSearchParams]);
 
   useEffect(() => {
     setPokemonsContextData(pokemons);
