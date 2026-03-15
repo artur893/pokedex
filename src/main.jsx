@@ -10,6 +10,7 @@ import Login from "./components/subpages/Login.jsx";
 import Home from "./components/subpages/Home.jsx";
 import { LoginProvider } from "./context/LoginContext.jsx";
 import { PokemonProvider } from "./context/PokemonContext.jsx";
+import { Navigate } from "react-router";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
           <PokemonProvider>
             <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
               <Routes>
+                <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="/" element={<App />}>
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
