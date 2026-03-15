@@ -16,6 +16,12 @@ function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (activePage > totalPages && totalPages > 0) {
+      setPage(totalPages);
+    }
+  }, [totalItems]);
+
   function populateButtons() {
     const buttons = [];
     for (let i = 1; i <= totalPages; i++) {
