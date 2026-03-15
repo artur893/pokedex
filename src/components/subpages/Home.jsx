@@ -5,6 +5,7 @@ import PokemonCard from "../shared/PokemonCard";
 import Pagination from "../shared/Pagination";
 import { Input } from "@material-tailwind/react";
 import { useSearchParams } from "react-router";
+import { Link } from "react-router";
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,7 +58,9 @@ function Home() {
             itemsOnPage * (page - 1) + itemsOnPage,
           )
           .map((item) => (
-            <PokemonCard key={item.id} pokemon={item} />
+            <Link key={item.id} to={`/pokemon/${item.id}`}>
+              <PokemonCard key={item.id} pokemon={item} />
+            </Link>
           ))}
       </div>
       <Pagination

@@ -11,6 +11,7 @@ import Home from "./components/subpages/Home.jsx";
 import { LoginProvider } from "./context/LoginContext.jsx";
 import { PokemonProvider } from "./context/PokemonContext.jsx";
 import { Navigate } from "react-router";
+import PokemonDetails from "./components/subpages/PokemonDetails.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById("root")).render(
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/home" element={<Home />} />
+                  <Route path="/pokemon/:id" element={<PokemonDetails />} />
                 </Route>
               </Routes>
             </SnackbarProvider>
