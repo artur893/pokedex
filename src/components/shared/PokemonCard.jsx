@@ -1,6 +1,6 @@
 function PokemonCard({ pokemon }) {
   return (
-    <div className="flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 hover:scale-105">
+    <div className="flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 hover:scale-105 hover:cursor-pointer">
       <img src={pokemon?.photo} alt={pokemon?.name} />
       <h3 className="capitalize font-bold text-xl text-center mb-2">
         {pokemon?.name}
