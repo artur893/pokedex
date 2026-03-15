@@ -1,10 +1,21 @@
+import { useEffect, useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 
 function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
-  const range = window.innerWidth < 426 ? 1 : window.innerWidth < 769 ? 2 : 3;
-
   const totalPages = Math.ceil(totalItems / itemsOnPage);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const range = viewportWidth < 426 ? 1 : viewportWidth < 769 ? 2 : 3;
+
+  useEffect(() => {
+    function handleResize() {
+      setViewportWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   function populateButtons() {
     const buttons = [];
     for (let i = 1; i <= totalPages; i++) {
@@ -29,7 +40,7 @@ function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
       {activePage !== 1 && (
         <Button isPill variant="ghost" onClick={() => setPage(activePage - 1)}>
           <NavArrowLeft className="mr-1.5 h-4 w-4 stroke-2" />
-          Previous
+          Prev
         </Button>
       )}
       {populateButtons()}
