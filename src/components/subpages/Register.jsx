@@ -4,7 +4,7 @@ import usePost from "../../hooks/usePost";
 import { useSnackbar } from "notistack";
 
 function Register() {
-  const { post, isLoading } = usePost("http://localhost:3001/users");
+  const { post, isLoading } = usePost("http://localhost:3000/users");
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -21,11 +21,11 @@ function Register() {
 
   const onSubmit = async (formData) => {
     const isNameResponse = await fetch(
-      `http://localhost:3001/users?name=${formData.name}`,
+      `http://localhost:3000/users?name=${formData.name}`,
     );
     const isNameExist = await isNameResponse.json();
     const isEmailResponse = await fetch(
-      `http://localhost:3001/users?email=${formData.email}`,
+      `http://localhost:3000/users?email=${formData.email}`,
     );
     const isEmailExist = await isEmailResponse.json();
 

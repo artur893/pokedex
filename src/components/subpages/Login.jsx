@@ -31,7 +31,7 @@ function Login() {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <p className="flex-1 flex justify-center items-center">Loading...</p>
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}

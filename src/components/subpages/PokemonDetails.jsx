@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
 import { useParams } from "react-router";
 import usePokemon from "../../hooks/usePokemon";
+import { HeartIcon as HeartEmpty } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartFull } from "@heroicons/react/24/solid";
 
 function PokemonDetails() {
   const [pokemon, setPokemon] = useState(null);
@@ -27,12 +29,15 @@ function PokemonDetails() {
   return (
     pokemon && (
       <>
-        <div className="flex flex-col self-center justify-between sm:flex-row max-w-xl w-11/12 p-4 m-4 bg-gray-200 dark:bg-slate-900 rounded-xl">
+        <div className="relative flex flex-col self-center justify-between sm:flex-row max-w-xl w-11/12 p-4 m-4 bg-gray-200 dark:bg-slate-900 rounded-xl">
           <img
             src={pokemon.photo}
             alt={pokemon.name}
             className="max-w-72 self-center"
           />
+          <button className="absolute top-4 right-4">
+            <HeartFull className="w-8 h-8 text-red-500" />
+          </button>
           <div className="place-content-center">
             <h3 className="capitalize font-bold text-xl text-center mb-2">
               {pokemon.name}

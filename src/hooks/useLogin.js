@@ -10,11 +10,11 @@ function useLogin() {
       setIsLoading(true);
       setIsError(false);
       const loginRes = await fetch(
-        `http://localhost:3001/users?login=${identifier}`,
+        `http://localhost:3000/users?login=${identifier}`,
       );
       const loginUser = await loginRes.json();
       const emailRes = await fetch(
-        `http://localhost:3001/users?email=${identifier}`,
+        `http://localhost:3000/users?email=${identifier}`,
       );
       const emailUser = await emailRes.json();
       const userRecord = [...loginUser, ...emailUser][0];
