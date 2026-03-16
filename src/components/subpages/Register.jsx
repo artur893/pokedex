@@ -1,10 +1,10 @@
 import { Button, Input } from "@material-tailwind/react";
 import { useForm, useWatch } from "react-hook-form";
-import usePost from "../../hooks/usePost";
+import useRequest from "../../hooks/useRequest";
 import { useSnackbar } from "notistack";
 
 function Register() {
-  const { post, isLoading } = usePost("http://localhost:3000/users");
+  const { send, isLoading } = useRequest("http://localhost:3000/users");
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -30,7 +30,7 @@ function Register() {
     const isEmailExist = await isEmailResponse.json();
 
     if (isNameExist.length === 0 && isEmailExist.length === 0) {
-      const response = await post({
+      const response = await send("POST", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
