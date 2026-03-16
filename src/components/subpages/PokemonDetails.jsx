@@ -1,15 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
 import { useParams } from "react-router";
+import usePokemon from "../../hooks/usePokemon";
 
 function PokemonDetails() {
   const [pokemon, setPokemon] = useState(null);
   const { pokemonsContextData } = useContext(PokemonContext);
   const { id } = useParams();
+  const { isLoading, isError } = usePokemon();
 
   useEffect(() => {
     setPokemon(pokemonsContextData.find((poke) => poke.id === Number(id)));
   }, [id, setPokemon, pokemonsContextData]);
+
+  if (isLoading)
+    return (
+      <p className="flex-1 flex justify-center items-center">
+        Ładowanie danych...
+      </p>
+    );
+  if (isError)
+    return (
+      <p className="flex-1 flex justify-center items-center">Wystąpił błąd</p>
+    );
 
   return (
     pokemon && (

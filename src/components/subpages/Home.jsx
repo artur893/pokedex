@@ -11,9 +11,8 @@ function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = Number(searchParams.get("page")) || 1;
   const searchFromUrl = searchParams.get("search") || "";
-  const { pokemonsContextData, setPokemonsContextData } =
-    useContext(PokemonContext);
-  const { pokemons, isLoading, isError } = usePokemon();
+  const { pokemonsContextData } = useContext(PokemonContext);
+  const { isLoading, isError } = usePokemon();
   const [page, setPage] = useState(pageFromUrl);
   const [search, setSearch] = useState(searchFromUrl);
   const itemsOnPage = 15;
@@ -21,10 +20,6 @@ function Home() {
   useEffect(() => {
     setSearchParams({ page, search });
   }, [page, search, setSearchParams]);
-
-  useEffect(() => {
-    setPokemonsContextData(pokemons);
-  }, [pokemons, setPokemonsContextData]);
 
   if (isLoading)
     return (

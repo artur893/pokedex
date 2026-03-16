@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { PokemonContext } from "../context/PokemonContext";
 
 function usePokemon() {
-  const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const { pokemonsContextData, setPokemonsContextData } =
+    useContext(PokemonContext);
 
   useEffect(() => {
     async function getPokemons() {
@@ -25,7 +27,7 @@ function usePokemon() {
           };
           list.push(pokemonObj);
         }
-        setPokemons(list);
+        setPokemonsContextData(list);
       } catch (error) {
         setIsError(true);
         console.error(error);
@@ -33,10 +35,12 @@ function usePokemon() {
         setIsLoading(false);
       }
     }
-    getPokemons();
-  }, []);
+    if (pokemonsContextData.length === 0) {
+      getPokemons();
+    }
+  }, [pokemonsContextData, setPokemonsContextData]);
 
-  return { pokemons, isLoading, isError };
+  return { isLoading, isError };
 }
 
 export default usePokemon;
