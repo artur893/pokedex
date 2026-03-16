@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-function useRequest(url) {
+function useRequest() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  async function send(method, body) {
+  async function send(url, method, body) {
     try {
       setIsLoading(true);
       setIsError(false);

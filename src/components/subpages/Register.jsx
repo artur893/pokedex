@@ -4,7 +4,7 @@ import useRequest from "../../hooks/useRequest";
 import { useSnackbar } from "notistack";
 
 function Register() {
-  const { send, isLoading } = useRequest("http://localhost:3000/users");
+  const { send, isLoading } = useRequest();
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -30,7 +30,7 @@ function Register() {
     const isEmailExist = await isEmailResponse.json();
 
     if (isNameExist.length === 0 && isEmailExist.length === 0) {
-      const response = await send("POST", {
+      const response = await send("http://localhost:3000/users", "POST", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
