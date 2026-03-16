@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
+import { LoginContext } from "../../context/LoginContext";
 import { useParams } from "react-router";
 import usePokemon from "../../hooks/usePokemon";
 import { HeartIcon as HeartEmpty } from "@heroicons/react/24/outline";
@@ -10,6 +11,7 @@ import useFetch from "../../hooks/useFetch";
 function PokemonDetails() {
   const [pokemon, setPokemon] = useState(null);
   const { pokemonsContextData } = useContext(PokemonContext);
+  const { user } = useContext(LoginContext);
   const { id } = useParams();
   const { isLoading, isError } = usePokemon();
   const { data, refetch } = useFetch(`http://localhost:3000/pokemons/${id}`);
@@ -55,11 +57,12 @@ function PokemonDetails() {
             className="max-w-72 self-center"
           />
           <button onClick={handleFavorite} className="absolute top-4 right-4">
-            {data?.favorite ? (
-              <HeartFull className="w-8 h-8 text-red-500" />
-            ) : (
-              <HeartEmpty className="w-8 h-8 text-gray-500" />
-            )}
+            {user &&
+              (data?.favorite ? (
+                <HeartFull className="w-8 h-8 text-red-500" />
+              ) : (
+                <HeartEmpty className="w-8 h-8 text-gray-500" />
+              ))}
           </button>
           <div className="place-content-center">
             <h3 className="capitalize font-bold text-xl text-center mb-2">
