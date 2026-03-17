@@ -27,6 +27,7 @@ createRoot(document.getElementById("root")).render(
                   <Route path="/login" element={<Login />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/pokemon/:id" element={<PokemonDetails />} />
+                  <Route path="/favorite" element={<Home favorite />} />
                 </Route>
               </Routes>
             </SnackbarProvider>

@@ -50,7 +50,7 @@ function Navbar() {
             <List className="min-w-48">
               {user ? (
                 <>
-                  <Link>
+                  <Link to="favorite">
                     <List.Item>Ulubione</List.Item>
                   </Link>
                   <Link>
@@ -106,7 +106,7 @@ function Navbar() {
           <nav className="hidden sm:flex gap-4">
             {user ? (
               <>
-                <Link>
+                <Link to="favorite">
                   <Button variant="solid">Ulubione</Button>
                 </Link>
                 <Link>
