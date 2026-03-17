@@ -53,7 +53,7 @@ function Navbar() {
                   <Link to="favorite">
                     <List.Item>Ulubione</List.Item>
                   </Link>
-                  <Link>
+                  <Link to="arena">
                     <List.Item>Arena</List.Item>
                   </Link>
                   <Link>
@@ -109,7 +109,7 @@ function Navbar() {
                 <Link to="favorite">
                   <Button variant="solid">Ulubione</Button>
                 </Link>
-                <Link>
+                <Link to="arena">
                   <Button variant="solid">Arena</Button>
                 </Link>
                 <Link>
