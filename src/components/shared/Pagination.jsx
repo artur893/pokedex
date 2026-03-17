@@ -42,21 +42,33 @@ function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
   }
 
   return (
-    <div className="flex items-center gap-1 self-center mt-4">
-      {activePage !== 1 && (
-        <Button isPill variant="ghost" onClick={() => setPage(activePage - 1)}>
-          <NavArrowLeft className="mr-1.5 h-4 w-4 stroke-2" />
-          Prev
-        </Button>
+    <>
+      {totalItems > 0 && (
+        <div className="flex items-center gap-1 self-center mt-4">
+          {activePage !== 1 && (
+            <Button
+              isPill
+              variant="ghost"
+              onClick={() => setPage(activePage - 1)}
+            >
+              <NavArrowLeft className="mr-1.5 h-4 w-4 stroke-2" />
+              Prev
+            </Button>
+          )}
+          {populateButtons()}
+          {activePage !== totalPages && (
+            <Button
+              isPill
+              variant="ghost"
+              onClick={() => setPage(activePage + 1)}
+            >
+              Next
+              <NavArrowRight className="ml-1.5 h-4 w-4 stroke-2" />
+            </Button>
+          )}
+        </div>
       )}
-      {populateButtons()}
-      {activePage !== totalPages && (
-        <Button isPill variant="ghost" onClick={() => setPage(activePage + 1)}>
-          Next
-          <NavArrowRight className="ml-1.5 h-4 w-4 stroke-2" />
-        </Button>
-      )}
-    </div>
+    </>
   );
 }
 
