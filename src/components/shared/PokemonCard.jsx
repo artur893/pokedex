@@ -1,10 +1,21 @@
 import logo from "../../icons/logo.png";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-function PokemonCard({ pokemon }) {
+function PokemonCard({ pokemon, arena, handleDelete }) {
   return (
     <>
       {pokemon ? (
-        <div className="flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 hover:scale-105 hover:cursor-pointer">
+        <div
+          className={`relative flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 ${arena ? "" : "hover:scale-105 hover:cursor-pointer"}`}
+        >
+          {arena && (
+            <button
+              onClick={() => handleDelete()}
+              className="flex absolute top-4 right-4"
+            >
+              <XMarkIcon className="w-8 h-8 text-red-500" />
+            </button>
+          )}
           <img src={pokemon?.photo} alt={pokemon?.name} />
           <h3 className="capitalize font-bold text-xl text-center mb-2">
             {pokemon?.name}
