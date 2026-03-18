@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
 import { LoginContext } from "../../context/LoginContext";
+import { ArenaContext } from "../../context/ArenaContext";
 import { useParams } from "react-router";
 import usePokemon from "../../hooks/usePokemon";
 import { HeartIcon as HeartEmpty } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartFull } from "@heroicons/react/24/solid";
+import { Sword } from "lucide-react";
 import useRequest from "../../hooks/useRequest";
 import useFetch from "../../hooks/useFetch";
 
@@ -12,6 +14,7 @@ function PokemonDetails() {
   const [pokemon, setPokemon] = useState(null);
   const { pokemonsContextData } = useContext(PokemonContext);
   const { user } = useContext(LoginContext);
+  const { arenaContextData, setArenaContextData } = useContext(ArenaContext);
   const { id } = useParams();
   const { isLoading, isError } = usePokemon();
   const { data, refetch } = useFetch(`http://localhost:3000/pokemons/${id}`);
@@ -36,6 +39,12 @@ function PokemonDetails() {
     }
   };
 
+  const handleArena = (pokemon) => {
+    if (arenaContextData.length < 2) {
+      setArenaContextData([...arenaContextData, pokemon]);
+    }
+  };
+
   if (isLoading)
     return (
       <p className="flex-1 flex justify-center items-center">
@@ -56,14 +65,27 @@ function PokemonDetails() {
             alt={pokemon.name}
             className="max-w-72 self-center"
           />
-          <button onClick={handleFavorite} className="absolute top-4 right-4">
-            {user &&
-              (data?.favorite ? (
-                <HeartFull className="w-8 h-8 text-red-500" />
-              ) : (
-                <HeartEmpty className="w-8 h-8 text-gray-500" />
-              ))}
-          </button>
+          {user && (
+            <>
+              <button
+                onClick={handleFavorite}
+                className="absolute top-4 right-4"
+              >
+                {data?.favorite ? (
+                  <HeartFull className="w-8 h-8 text-red-500" />
+                ) : (
+                  <HeartEmpty className="w-8 h-8 text-gray-500" />
+                )}
+              </button>
+              <button
+                onClick={() => handleArena(pokemon)}
+                className="flex absolute bottom-4 right-4"
+              >
+                <span className="self-center mr-2">{`${arenaContextData.length} / 2`}</span>
+                <Sword className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+              </button>
+            </>
+          )}
           <div className="place-content-center">
             <h3 className="capitalize font-bold text-xl text-center mb-2">
               {pokemon.name}
