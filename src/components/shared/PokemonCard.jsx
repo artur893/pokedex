@@ -1,12 +1,12 @@
 import logo from "../../icons/logo.png";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-function PokemonCard({ pokemon, arena, handleDelete }) {
+function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
   return (
     <>
       {pokemon ? (
         <div
-          className={`relative flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 ${arena ? "" : "hover:scale-105 hover:cursor-pointer"}`}
+          className={`relative flex flex-col w-60 p-4 bg-gray-200 dark:bg-slate-900 rounded-xl transition-transform duration-300 ${arena ? "" : "hover:scale-105 hover:cursor-pointer"} ${opacity ? "opacity-50" : ""}`}
         >
           {arena && (
             <button
