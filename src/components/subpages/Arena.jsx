@@ -3,6 +3,8 @@ import { LoginContext } from "../../context/LoginContext";
 import { ArenaContext } from "../../context/ArenaContext";
 import PokemonCard from "../shared/PokemonCard";
 import { Button } from "@material-tailwind/react";
+import useFetch from "../../hooks/useFetch";
+import useRequest from "../../hooks/useRequest";
 
 function Arena() {
   const { user } = useContext(LoginContext);
@@ -10,6 +12,38 @@ function Arena() {
   const [message, setMessage] = useState("");
   const [isOver, setIsOver] = useState(false);
   const [winner, setWinner] = useState(null);
+  const { data: pokemon1 } = useFetch(
+    `http://localhost:3000/pokemons/${arenaContextData[0]?.id}`,
+  );
+  const { data: pokemon2 } = useFetch(
+    `http://localhost:3000/pokemons/${arenaContextData[1]?.id}`,
+  );
+  const { send } = useRequest();
+
+  const handleUpdateDB = async (data, index, won) => {
+    if (data) {
+      await send(
+        `http://localhost:3000/pokemons/${arenaContextData[index].id}`,
+        "PATCH",
+        {
+          win: won ? data.win + 1 : data.win,
+          lose: won ? data.lose : data.lose + 1,
+          exp: won
+            ? arenaContextData[index].exp + 10
+            : arenaContextData[index].exp,
+        },
+      );
+    } else {
+      await send(`http://localhost:3000/pokemons`, "POST", {
+        id: String(arenaContextData[index].id),
+        win: won ? 1 : 0,
+        lose: won ? 0 : 1,
+        exp: won
+          ? arenaContextData[index].exp + 10
+          : arenaContextData[index].exp,
+      });
+    }
+  };
 
   const handleBattle = () => {
     const powerPokemon1 = arenaContextData[0].exp + arenaContextData[0].weight;
@@ -20,12 +54,16 @@ function Arena() {
       return;
     }
     if (powerPokemon1 > powerPokemon2) {
+      handleUpdateDB(pokemon1, 0, true);
+      handleUpdateDB(pokemon2, 1, false);
       setMessage(`${arenaContextData[0].name} won`);
       setWinner(1);
       setIsOver(true);
       return;
     }
     if (powerPokemon1 < powerPokemon2) {
+      handleUpdateDB(pokemon1, 0, false);
+      handleUpdateDB(pokemon2, 1, true);
       setMessage(`${arenaContextData[1].name} won`);
       setWinner(2);
       setIsOver(true);
