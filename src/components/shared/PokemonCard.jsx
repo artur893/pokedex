@@ -1,7 +1,10 @@
 import logo from "../../icons/logo.png";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useContext } from "react";
+import { LoginContext } from "../../context/LoginContext";
 
 function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
+  const { user } = useContext(LoginContext);
   return (
     <>
       {pokemon ? (
@@ -15,6 +18,11 @@ function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
             >
               <XMarkIcon className="w-8 h-8 text-red-500" />
             </button>
+          )}
+          {pokemon?.win !== undefined && user && (
+            <div className="absolute top-0 left-0 p-1 border-2 border-current rounded-tl-lg rounded-br-lg text-xs">
+              W: {pokemon.win} | L: {pokemon.lose}
+            </div>
           )}
           <img src={pokemon?.photo} alt={pokemon?.name} />
           <h3 className="capitalize font-bold text-xl text-center mb-2">

@@ -33,6 +33,13 @@ function Home({ favorite }) {
   );
 
   const listToDisplay = favorite ? favPokemonList : pokemonsContextData;
+  const mergedList = listToDisplay.map((pokemon) => {
+    const stats = favPokemons?.find((p) => Number(p.id) === Number(pokemon.id));
+    return {
+      ...pokemon,
+      ...stats,
+    };
+  });
 
   useEffect(() => {
     setSearchParams({ page, search });
@@ -57,7 +64,7 @@ function Home({ favorite }) {
 
   return (
     <>
-      {listToDisplay.length > 0 ? (
+      {mergedList.length > 0 ? (
         <>
           <div className="bg-gray-200 dark:bg-slate-900 rounded-xl w-[240px] mx-auto mb-4">
             <Input
@@ -69,7 +76,7 @@ function Home({ favorite }) {
             />
           </div>
           <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-items-center">
-            {listToDisplay
+            {mergedList
               .filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase()),
               )
@@ -85,7 +92,7 @@ function Home({ favorite }) {
           </div>
           <Pagination
             totalItems={
-              listToDisplay.filter((pokemon) =>
+              mergedList.filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase()),
               ).length
             }

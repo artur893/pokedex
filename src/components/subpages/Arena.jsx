@@ -46,8 +46,10 @@ function Arena() {
   };
 
   const handleBattle = () => {
-    const powerPokemon1 = arenaContextData[0].exp + arenaContextData[0].weight;
-    const powerPokemon2 = arenaContextData[1].exp + arenaContextData[1].weight;
+    const powerPokemon1 =
+      pokemon1?.exp || arenaContextData[0].exp + arenaContextData[0].weight;
+    const powerPokemon2 =
+      pokemon2?.exp || arenaContextData[1].exp + arenaContextData[1].weight;
     if (powerPokemon1 === powerPokemon2) {
       setMessage("REMIS");
       setIsOver(true);
