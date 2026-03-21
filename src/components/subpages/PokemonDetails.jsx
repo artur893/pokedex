@@ -65,27 +65,6 @@ function PokemonDetails() {
             alt={pokemon.name}
             className="max-w-72 self-center"
           />
-          {user && (
-            <>
-              <button
-                onClick={handleFavorite}
-                className="absolute top-4 right-4"
-              >
-                {data?.favorite ? (
-                  <HeartFull className="w-8 h-8 text-red-500" />
-                ) : (
-                  <HeartEmpty className="w-8 h-8 text-gray-500" />
-                )}
-              </button>
-              <button
-                onClick={() => handleArena(pokemon)}
-                className="flex absolute bottom-4 right-4"
-              >
-                <span className="self-center mr-2">{`${arenaContextData.length} / 2`}</span>
-                <Sword className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
-              </button>
-            </>
-          )}
           <div className="place-content-center">
             <h3 className="capitalize font-bold text-xl text-center mb-2">
               {pokemon.name}
@@ -101,7 +80,9 @@ function PokemonDetails() {
               </div>
               <div>
                 <p className="text-center text-sm font-bold">Experience</p>
-                <p className="text-center text-sm">{pokemon.exp}</p>
+                <p className="text-center text-sm">
+                  {data?.exp && user ? data.exp : pokemon.exp}
+                </p>
               </div>
               <div>
                 <p className="text-center text-sm font-bold">Ability</p>
@@ -109,6 +90,34 @@ function PokemonDetails() {
               </div>
             </div>
           </div>
+          {user && (
+            <div className="h-10">
+              <button
+                onClick={handleFavorite}
+                className="absolute top-4 right-4"
+              >
+                {data?.favorite ? (
+                  <HeartFull className="w-8 h-8 text-red-500" />
+                ) : (
+                  <HeartEmpty className="w-8 h-8 text-gray-500" />
+                )}
+              </button>
+              <button
+                onClick={() => handleArena(pokemon)}
+                className="flex absolute bottom-1 right-4"
+              >
+                <span className="self-center mr-2">{`${arenaContextData.length} / 2`}</span>
+                <Sword className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+              </button>
+              {data?.win || data?.lose ? (
+                <div className="absolute bottom-0 left-0 p-1 border-2 border-current rounded-bl-lg rounded-tr-lg">
+                  W: {data.win} | L: {data.lose}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          )}
         </div>
       </>
     )
