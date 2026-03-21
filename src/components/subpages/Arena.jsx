@@ -26,8 +26,8 @@ function Arena() {
         `http://localhost:3000/pokemons/${arenaContextData[index].id}`,
         "PATCH",
         {
-          win: won ? data.win + 1 : data.win,
-          lose: won ? data.lose : data.lose + 1,
+          win: won ? (data.win ?? 0) + 1 : (data.win ?? 0),
+          lose: won ? (data.lose ?? 0) : (data.lose ?? 0) + 1,
           exp: won
             ? arenaContextData[index].exp + 10
             : arenaContextData[index].exp,
