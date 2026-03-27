@@ -8,6 +8,7 @@ import { Input } from "@material-tailwind/react";
 import { useSearchParams } from "react-router";
 import { Link } from "react-router";
 import useFetch from "../../hooks/useFetch";
+import useMergePokemons from "../../hooks/useMergePokemons";
 
 function Home({ favorite }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,38 +21,27 @@ function Home({ favorite }) {
   const { user } = useContext(LoginContext);
   const { isLoading, isError } = usePokemon();
   const {
-    data: favPokemons,
-    isLoading: isLoadingFav,
-    isError: isErrorFav,
+    data: dbPokemons,
+    isLoading: isLoadingDb,
+    isError: isErrorDb,
   } = useFetch("http://localhost:3000/pokemons");
 
-  const favMap = new Map(
-    (favPokemons ?? []).map((f) => [Number(f.id), f.favorite]),
-  );
-  const favPokemonList = pokemonsContextData.filter(
-    (poke) => favMap.get(poke.id) === true,
-  );
-
-  const listToDisplay = favorite ? favPokemonList : pokemonsContextData;
-  const mergedList = listToDisplay.map((pokemon) => {
-    const stats = favPokemons?.find((p) => Number(p.id) === Number(pokemon.id));
-    return {
-      ...pokemon,
-      ...stats,
-    };
-  });
+  const mergedList = useMergePokemons(pokemonsContextData, dbPokemons);
+  const listToDisplay = favorite
+    ? mergedList.filter((pokemon) => pokemon.favorite)
+    : mergedList;
 
   useEffect(() => {
     setSearchParams({ page, search });
   }, [page, search, setSearchParams]);
 
-  if (isLoading || isLoadingFav)
+  if (isLoading || isLoadingDb)
     return (
       <p className="flex-1 flex justify-center items-center">
         Ładowanie danych...
       </p>
     );
-  if (isError || isErrorFav)
+  if (isError || isErrorDb)
     return (
       <p className="flex-1 flex justify-center items-center">Wystąpił błąd</p>
     );
@@ -64,7 +54,7 @@ function Home({ favorite }) {
 
   return (
     <>
-      {mergedList.length > 0 ? (
+      {listToDisplay.length > 0 ? (
         <>
           <div className="bg-gray-200 dark:bg-slate-900 rounded-xl w-[240px] mx-auto mb-4">
             <Input
@@ -76,7 +66,7 @@ function Home({ favorite }) {
             />
           </div>
           <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-items-center">
-            {mergedList
+            {listToDisplay
               .filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase()),
               )
@@ -92,7 +82,7 @@ function Home({ favorite }) {
           </div>
           <Pagination
             totalItems={
-              mergedList.filter((pokemon) =>
+              listToDisplay.filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase()),
               ).length
             }
