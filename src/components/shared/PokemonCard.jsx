@@ -30,20 +30,20 @@ function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
           </h3>
           <div className="grid grid-cols-2 grid-rows-2 gap-4">
             <div>
-              <p className="text-center text-sm font-bold">Height</p>
-              <p className="text-center text-sm">{pokemon?.height}</p>
+              <p className="text-center text-xs font-bold">Height</p>
+              <p className="text-center text-xs">{pokemon?.height}</p>
             </div>
             <div>
-              <p className="text-center text-sm font-bold">Weight</p>
-              <p className="text-center text-sm">{pokemon?.weight}</p>
+              <p className="text-center text-xs font-bold">Weight</p>
+              <p className="text-center text-xs">{pokemon?.weight}</p>
             </div>
             <div>
-              <p className="text-center text-sm font-bold">Experience</p>
-              <p className="text-center text-sm">{pokemon?.exp}</p>
+              <p className="text-center text-xs font-bold">Experience</p>
+              <p className="text-center text-xs">{pokemon?.exp}</p>
             </div>
             <div>
-              <p className="text-center text-sm font-bold">Ability</p>
-              <p className="text-center text-sm">{pokemon?.ability}</p>
+              <p className="text-center text-xs font-bold">Ability</p>
+              <p className="text-center text-xs">{pokemon?.ability}</p>
             </div>
           </div>
         </div>
