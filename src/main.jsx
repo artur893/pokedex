@@ -15,6 +15,7 @@ import { Navigate } from "react-router";
 import PokemonDetails from "./components/subpages/PokemonDetails.jsx";
 import Arena from "./components/subpages/Arena.jsx";
 import Ranking from "./components/subpages/Ranking.jsx";
+import Edit from "./components/subpages/Edit.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -34,6 +35,7 @@ createRoot(document.getElementById("root")).render(
                     <Route path="/favorite" element={<Home favorite />} />
                     <Route path="/arena" element={<Arena />} />
                     <Route path="/ranking" element={<Ranking />} />
+                    <Route path="/edit" element={<Edit />} />
                   </Route>
                 </Routes>
               </SnackbarProvider>

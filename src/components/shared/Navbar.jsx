@@ -59,7 +59,7 @@ function Navbar() {
                   <Link to="ranking">
                     <List.Item>Ranking</List.Item>
                   </Link>
-                  <Link>
+                  <Link to="edit">
                     <List.Item>Edycja</List.Item>
                   </Link>
                   <Link to="login">
@@ -115,7 +115,7 @@ function Navbar() {
                 <Link to="ranking">
                   <Button variant="solid">Ranking</Button>
                 </Link>
-                <Link>
+                <Link to="edit">
                   <Button variant="solid">Edycja</Button>
                 </Link>
                 <Link to="login">
