@@ -59,17 +59,22 @@ function Modal({ isOpen, setIsOpen, pokemon }) {
         });
       }
     } else {
-      const json = await send(
-        `http://localhost:3000/pokemons/${pokemon.id}`,
-        "POST",
-        {
-          id: String(pokemon.id),
-          height: Number(formData.height),
-          weight: Number(formData.weight),
-          exp: Number(formData.exp),
-        },
-      );
-      if (json) console.log(json);
+      const json = await send(`http://localhost:3000/pokemons`, "POST", {
+        id: String(pokemon.id),
+        height: Number(formData.height),
+        weight: Number(formData.weight),
+        exp: Number(formData.exp),
+      });
+      if (json) {
+        enqueueSnackbar(`Zmieniono atrybuty ${pokemon.name}`, {
+          variant: "success",
+        });
+        navigate("/home");
+      } else {
+        enqueueSnackbar(`Błąd edycji`, {
+          variant: "error",
+        });
+      }
     }
   };
 
