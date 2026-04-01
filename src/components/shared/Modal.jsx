@@ -1,13 +1,16 @@
 import { Button, Input } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import useRequest from "../../hooks/useRequest";
 import useFetch from "../../hooks/useFetch";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
-function Modal({ isOpen, setIsOpen, pokemon }) {
+function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
   const {
     register,
     handleSubmit,
@@ -20,8 +23,12 @@ function Modal({ isOpen, setIsOpen, pokemon }) {
       exp: pokemon?.exp,
     },
   });
+  const [photoId, setPhotoId] = useState(151);
   const { data: pokemonApi } = useFetch(
     `http://localhost:3000/pokemons/${pokemon?.id}`,
+  );
+  const { data: pokemonPhotoData } = useFetch(
+    `https://pokeapi.co/api/v2/pokemon/${photoId}`,
   );
   const { send } = useRequest();
   const { enqueueSnackbar } = useSnackbar();
@@ -93,7 +100,11 @@ function Modal({ isOpen, setIsOpen, pokemon }) {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="flex justify-between">
-              <h1 className="font-bold capitalize">{pokemon?.name}</h1>
+              {isModalCreateMode ? (
+                <h1 className="font-bold">Stwórz pokemona</h1>
+              ) : (
+                <h1 className="font-bold capitalize">{pokemon?.name}</h1>
+              )}
               <button>
                 <XMarkIcon
                   className="h-6 w-6 text-gray-700"
@@ -104,6 +115,19 @@ function Modal({ isOpen, setIsOpen, pokemon }) {
                 />
               </button>
             </div>
+            {isModalCreateMode && (
+              <div>
+                <label htmlFor="name">Nazwa</label>
+                <Input
+                  type="number"
+                  id="name"
+                  {...register("name", {
+                    required: "Pole wymagane",
+                  })}
+                />
+                <p className="text-xs text-red-500">{errors?.name?.message}</p>
+              </div>
+            )}
             <div>
               <label htmlFor="height">Wzrost</label>
               <Input
@@ -137,7 +161,30 @@ function Modal({ isOpen, setIsOpen, pokemon }) {
               />
               <p className="text-xs text-red-500">{errors?.exp?.message}</p>
             </div>
-            <Button variant="outline">Zmień atrybuty</Button>
+            <div>
+              <label>Grafika</label>
+              <div className="flex items-center">
+                <ArrowLeftIcon
+                  className="h-6 w-6 text-gray-700 hover:text-gray-500"
+                  onClick={() => setPhotoId((prev) => prev - 1)}
+                />
+                <img
+                  className="w-40 m-auto"
+                  src={
+                    pokemonPhotoData.sprites.other["official-artwork"]
+                      .front_default
+                  }
+                  alt={pokemonPhotoData.name}
+                />
+                <ArrowRightIcon
+                  className="h-6 w-6 text-gray-700 hover:text-gray-500"
+                  onClick={() => setPhotoId((prev) => prev + 1)}
+                />
+              </div>
+            </div>
+            <Button variant="outline">
+              {isModalCreateMode ? "Stwórz" : "Zmień atrybuty"}
+            </Button>
           </form>
         </div>
       </div>

@@ -11,6 +11,7 @@ import Modal from "../shared/Modal";
 function Edit() {
   const [pokemons, setPokemons] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCreateMode, setIsModalCreateMode] = useState(false);
   const [pokemon, setPokemon] = useState();
   const { user } = useContext(LoginContext);
   const { isLoading, isError } = usePokemon();
@@ -47,10 +48,18 @@ function Edit() {
       <Modal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
+        isModalCreateMode={isModalCreateMode}
         pokemon={pokemon}
       />
       <div className="m-auto text-xs sm:text-base">
-        <Button className="w-full mb-4 text-xs sm:text-base">
+        <Button
+          className="w-full mb-4 text-xs sm:text-base"
+          onClick={() => {
+            setPokemon(null);
+            setIsModalOpen(true);
+            setIsModalCreateMode(true);
+          }}
+        >
           Stwórz pokemona
         </Button>
         <table className="w-auto border-2">
@@ -75,6 +84,7 @@ function Edit() {
                   onClick={() => {
                     setPokemon(pokemon);
                     setIsModalOpen(true);
+                    setIsModalCreateMode(false);
                   }}
                 >
                   Edytuj
