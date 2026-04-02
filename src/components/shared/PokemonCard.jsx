@@ -43,7 +43,9 @@ function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
             </div>
             <div>
               <p className="text-center text-xs font-bold">Ability</p>
-              <p className="text-center text-xs">{pokemon?.ability}</p>
+              <p className="text-center text-xs">
+                {pokemon?.ability ?? "none"}
+              </p>
             </div>
           </div>
         </div>

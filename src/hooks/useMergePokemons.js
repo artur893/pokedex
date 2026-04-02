@@ -9,6 +9,13 @@ function useMergePokemons(apiPokemons, dbPokemons) {
     return { ...apiPokemon, ...dbPokemon };
   });
 
+  for (const poke of dbPokemons) {
+    const isExists = mergedList.some(
+      (mergedPoke) => Number(poke.id) === Number(mergedPoke.id),
+    );
+    if (!isExists) mergedList.push(poke);
+  }
+
   return mergedList;
 }
 

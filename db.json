@@ -83,11 +83,12 @@
       "exp": 75
     },
     {
-      "id": "156",
-      "height": 54,
-      "weight": 54,
-      "exp": 54,
-      "photo": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/156.png"
+      "id": "155",
+      "height": 12,
+      "weight": 12,
+      "exp": 12,
+      "photo": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png",
+      "name": "Sara"
     }
   ]
 }
