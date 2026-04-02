@@ -10,7 +10,7 @@ import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
-function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
+function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   const {
     register,
     handleSubmit,
@@ -64,30 +64,40 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
         });
       }
     } else {
-      const json = await send(`http://localhost:3000/pokemons`, "POST", {
-        id: isModalCreateMode ? String(photoId) : String(pokemon.id),
-
-        height: Number(formData.height),
-        weight: Number(formData.weight),
-        exp: Number(formData.exp),
-        ...(isModalCreateMode && {
-          photo:
-            pokemonPhotoData.sprites.other["official-artwork"].front_default,
-          name: formData.name,
-        }),
-      });
-      if (json) {
-        enqueueSnackbar(
-          `${isModalCreateMode ? `Dodano pokemona ${formData.name}` : `Zmieniono atrybuty ${pokemon.name}`}`,
-          {
-            variant: "success",
-          },
-        );
-        navigate("/home");
-      } else {
-        enqueueSnackbar(`Błąd edycji`, {
+      const isPhotoUsed = dbPokemons.some(
+        (poke) => Number(poke.id) === photoId,
+      );
+      if (isModalCreateMode && isPhotoUsed) {
+        enqueueSnackbar(`Wybierz inną grafikę`, {
           variant: "error",
         });
+      }
+      if (isModalCreateMode && !isPhotoUsed) {
+        const json = await send(`http://localhost:3000/pokemons`, "POST", {
+          id: isModalCreateMode ? String(photoId) : String(pokemon.id),
+          height: Number(formData.height),
+          weight: Number(formData.weight),
+          exp: Number(formData.exp),
+          ...(isModalCreateMode && {
+            photo:
+              pokemonPhotoData.sprites.other["official-artwork"].front_default,
+            name: formData.name,
+          }),
+        });
+
+        if (json) {
+          enqueueSnackbar(
+            `${isModalCreateMode ? `Dodano pokemona ${formData.name}` : `Zmieniono atrybuty ${pokemon.name}`}`,
+            {
+              variant: "success",
+            },
+          );
+          navigate("/home");
+        } else {
+          enqueueSnackbar(`Błąd edycji`, {
+            variant: "error",
+          });
+        }
       }
     }
   };
@@ -212,7 +222,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
                     }}
                   />
                   <img
-                    className="w-40 m-auto"
+                    className={`w-40 m-auto ${dbPokemons.some((poke) => Number(poke.id) === photoId) ? "opacity-30" : ""}`}
                     src={
                       pokemonPhotoData.sprites.other["official-artwork"]
                         .front_default

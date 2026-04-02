@@ -50,6 +50,7 @@ function Edit() {
         setIsOpen={setIsModalOpen}
         isModalCreateMode={isModalCreateMode}
         pokemon={pokemon}
+        dbPokemons={dbPokemons}
       />
       <div className="m-auto text-xs sm:text-base">
         <Button
