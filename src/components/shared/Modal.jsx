@@ -132,6 +132,10 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
                   id="name"
                   {...register("name", {
                     required: "Pole wymagane",
+                    minLength: {
+                      value: 3,
+                      message: "Nazwa musi mieć co najmniej 3 znaki",
+                    },
                   })}
                 />
                 <p className="text-xs text-red-500">{errors?.name?.message}</p>
@@ -144,6 +148,15 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
                 id="height"
                 {...register("height", {
                   required: "Pole wymagane",
+                  min: {
+                    value: 1,
+                    message: "Liczba musi być dodatnia",
+                  },
+                  validate: {
+                    isInteger: (value) =>
+                      Number.isInteger(Number(value)) ||
+                      "Liczba musi być całkowita",
+                  },
                 })}
               />
               <p className="text-xs text-red-500">{errors?.height?.message}</p>
@@ -155,6 +168,15 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
                 id="weight"
                 {...register("weight", {
                   required: "Pole wymagane",
+                  min: {
+                    value: 1,
+                    message: "Liczba musi być dodatnia",
+                  },
+                  validate: {
+                    isInteger: (value) =>
+                      Number.isInteger(Number(value)) ||
+                      "Liczba musi być całkowita",
+                  },
                 })}
               />
               <p className="text-xs text-red-500">{errors?.weight?.message}</p>
@@ -166,6 +188,15 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
                 id="exp"
                 {...register("exp", {
                   required: "Pole wymagane",
+                  min: {
+                    value: 1,
+                    message: "Liczba musi być dodatnia",
+                  },
+                  validate: {
+                    isInteger: (value) =>
+                      Number.isInteger(Number(value)) ||
+                      "Liczba musi być całkowita",
+                  },
                 })}
               />
               <p className="text-xs text-red-500">{errors?.exp?.message}</p>
