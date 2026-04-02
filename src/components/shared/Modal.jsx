@@ -35,13 +35,11 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (pokemon) {
-      reset({
-        height: pokemon.height,
-        weight: pokemon.weight,
-        exp: pokemon.exp,
-      });
-    }
+    reset({
+      height: pokemon?.height ?? null,
+      weight: pokemon?.weight ?? null,
+      exp: pokemon?.exp ?? null,
+    });
   }, [pokemon, reset]);
 
   const onSubmit = async (formData) => {
@@ -67,15 +65,24 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
       }
     } else {
       const json = await send(`http://localhost:3000/pokemons`, "POST", {
-        id: String(pokemon.id),
+        id: isModalCreateMode ? String(photoId) : String(pokemon.id),
+
         height: Number(formData.height),
         weight: Number(formData.weight),
         exp: Number(formData.exp),
+        ...(isModalCreateMode && {
+          photo:
+            pokemonPhotoData.sprites.other["official-artwork"].front_default,
+          name: formData.name,
+        }),
       });
       if (json) {
-        enqueueSnackbar(`Zmieniono atrybuty ${pokemon.name}`, {
-          variant: "success",
-        });
+        enqueueSnackbar(
+          `${isModalCreateMode ? `Dodano pokemona ${formData.name}` : `Zmieniono atrybuty ${pokemon.name}`}`,
+          {
+            variant: "success",
+          },
+        );
         navigate("/home");
       } else {
         enqueueSnackbar(`Błąd edycji`, {
@@ -88,7 +95,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
   return (
     isOpen && (
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center"
+        className="fixed inset-0 z-10 bg-black/40 backdrop-blur-sm flex items-center justify-center"
         onClick={() => setIsOpen(false)}
       >
         <div
@@ -101,9 +108,11 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
           >
             <div className="flex justify-between">
               {isModalCreateMode ? (
-                <h1 className="font-bold">Stwórz pokemona</h1>
+                <h1 className="font-bold text-lg">Stwórz pokemona</h1>
               ) : (
-                <h1 className="font-bold capitalize">{pokemon?.name}</h1>
+                <h1 className="font-bold text-lg capitalize">
+                  {pokemon?.name}
+                </h1>
               )}
               <button>
                 <XMarkIcon
@@ -119,7 +128,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
               <div>
                 <label htmlFor="name">Nazwa</label>
                 <Input
-                  type="number"
+                  type="text"
                   id="name"
                   {...register("name", {
                     required: "Pole wymagane",
@@ -161,27 +170,33 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon }) {
               />
               <p className="text-xs text-red-500">{errors?.exp?.message}</p>
             </div>
-            <div>
-              <label>Grafika</label>
-              <div className="flex items-center">
-                <ArrowLeftIcon
-                  className="h-6 w-6 text-gray-700 hover:text-gray-500"
-                  onClick={() => setPhotoId((prev) => prev - 1)}
-                />
-                <img
-                  className="w-40 m-auto"
-                  src={
-                    pokemonPhotoData.sprites.other["official-artwork"]
-                      .front_default
-                  }
-                  alt={pokemonPhotoData.name}
-                />
-                <ArrowRightIcon
-                  className="h-6 w-6 text-gray-700 hover:text-gray-500"
-                  onClick={() => setPhotoId((prev) => prev + 1)}
-                />
+            {isModalCreateMode && (
+              <div>
+                <label>Grafika</label>
+                <div className="flex items-center">
+                  <ArrowLeftIcon
+                    className={`h-6 w-6 text-gray-700 hover:text-gray-500 ${photoId === 151 ? "opacity-0" : ""}`}
+                    onClick={() => {
+                      if (photoId > 151) setPhotoId((prev) => prev - 1);
+                    }}
+                  />
+                  <img
+                    className="w-40 m-auto"
+                    src={
+                      pokemonPhotoData.sprites.other["official-artwork"]
+                        .front_default
+                    }
+                    alt={pokemonPhotoData.name}
+                  />
+                  <ArrowRightIcon
+                    className={`h-6 w-6 text-gray-700 hover:text-gray-500 ${photoId === 1025 ? "opacity-0" : ""}`}
+                    onClick={() => {
+                      if (photoId < 1025) setPhotoId((prev) => prev + 1);
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
             <Button variant="outline">
               {isModalCreateMode ? "Stwórz" : "Zmień atrybuty"}
             </Button>
