@@ -20,7 +20,7 @@ function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
     if (activePage > totalPages && totalPages > 0) {
       setPage(totalPages);
     }
-  }, [totalItems]);
+  }, [activePage, setPage, totalItems, totalPages]);
 
   function populateButtons() {
     const buttons = [];

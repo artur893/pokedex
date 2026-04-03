@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
 import { LoginContext } from "../../context/LoginContext";
 import { ArenaContext } from "../../context/ArenaContext";
@@ -12,7 +12,6 @@ import useFetch from "../../hooks/useFetch";
 import useMergePokemons from "../../hooks/useMergePokemons";
 
 function PokemonDetails() {
-  const [pokemon, setPokemon] = useState(null);
   const { pokemonsContextData } = useContext(PokemonContext);
   const { data: dbPokemons } = useFetch("http://localhost:3000/pokemons");
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
@@ -22,10 +21,7 @@ function PokemonDetails() {
   const { isLoading, isError } = usePokemon();
   const { data, refetch } = useFetch(`http://localhost:3000/pokemons/${id}`);
   const { send } = useRequest();
-
-  useEffect(() => {
-    setPokemon(mergedPokemons.find((poke) => Number(poke.id) === Number(id)));
-  }, [id, setPokemon, mergedPokemons]);
+  const pokemon = mergedPokemons.find((poke) => Number(poke.id) === Number(id));
 
   const handleFavorite = async () => {
     if (data) {

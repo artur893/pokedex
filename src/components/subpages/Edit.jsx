@@ -4,12 +4,11 @@ import usePokemon from "../../hooks/usePokemon";
 import useFetch from "../../hooks/useFetch";
 import { LoginContext } from "../../context/LoginContext";
 import useMergePokemons from "../../hooks/useMergePokemons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import Modal from "../shared/Modal";
 
 function Edit() {
-  const [pokemons, setPokemons] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalCreateMode, setIsModalCreateMode] = useState(false);
   const [pokemon, setPokemon] = useState();
@@ -22,10 +21,6 @@ function Edit() {
     isError: isErrorDb,
   } = useFetch("http://localhost:3000/pokemons");
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
-
-  useEffect(() => {
-    setPokemons(mergedPokemons);
-  }, [pokemonsContextData, dbPokemons]);
 
   if (isLoading || isLoadingDb)
     return (
@@ -73,7 +68,7 @@ function Edit() {
             </tr>
           </thead>
           <tbody>
-            {pokemons.map((pokemon, i) => (
+            {mergedPokemons.map((pokemon, i) => (
               <tr key={pokemon.id} className="border-b">
                 <td className="px-2 py-2 text-center">{i + 1}</td>
                 <td className="px-2 py-2">

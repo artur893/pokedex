@@ -4,10 +4,10 @@ import usePokemon from "../../hooks/usePokemon";
 import useFetch from "../../hooks/useFetch";
 import { LoginContext } from "../../context/LoginContext";
 import useMergePokemons from "../../hooks/useMergePokemons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function Ranking() {
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState(null);
   const { user } = useContext(LoginContext);
   const { isLoading, isError } = usePokemon();
   const { pokemonsContextData } = useContext(PokemonContext);
@@ -18,14 +18,11 @@ function Ranking() {
   } = useFetch("http://localhost:3000/pokemons");
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
   const [sortDescending, setSortDescending] = useState(true);
-
-  useEffect(() => {
-    setPokemons(mergedPokemons);
-  }, [pokemonsContextData, dbPokemons]);
+  const listToDisplay = pokemons ?? mergedPokemons;
 
   const sort = (key) => {
     setPokemons(
-      [...pokemons].sort((a, b) => {
+      [...mergedPokemons].sort((a, b) => {
         const valueA = a[key] ?? 0;
         const valueB = b[key] ?? 0;
         return sortDescending ? valueA - valueB : valueB - valueA;
@@ -85,7 +82,7 @@ function Ranking() {
           </tr>
         </thead>
         <tbody>
-          {pokemons.map((pokemon, i) => (
+          {listToDisplay.map((pokemon, i) => (
             <tr key={pokemon.id} className="border-b">
               <td className="sm:px-2 py-2 text-center">{i + 1}</td>
               <td className="sm:px-2 py-2">
