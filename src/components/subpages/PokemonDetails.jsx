@@ -9,10 +9,13 @@ import { HeartIcon as HeartFull } from "@heroicons/react/24/solid";
 import { Sword } from "lucide-react";
 import useRequest from "../../hooks/useRequest";
 import useFetch from "../../hooks/useFetch";
+import useMergePokemons from "../../hooks/useMergePokemons";
 
 function PokemonDetails() {
   const [pokemon, setPokemon] = useState(null);
   const { pokemonsContextData } = useContext(PokemonContext);
+  const { data: dbPokemons } = useFetch("http://localhost:3000/pokemons");
+  const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
   const { user } = useContext(LoginContext);
   const { arenaContextData, setArenaContextData } = useContext(ArenaContext);
   const { id } = useParams();
@@ -21,8 +24,8 @@ function PokemonDetails() {
   const { send } = useRequest();
 
   useEffect(() => {
-    setPokemon(pokemonsContextData.find((poke) => poke.id === Number(id)));
-  }, [id, setPokemon, pokemonsContextData]);
+    setPokemon(mergedPokemons.find((poke) => Number(poke.id) === Number(id)));
+  }, [id, setPokemon, mergedPokemons]);
 
   const handleFavorite = async () => {
     if (data) {
