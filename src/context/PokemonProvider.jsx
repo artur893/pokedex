@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PokemonContext } from "./ArenaContext";
+import { PokemonContext } from "./PokemonContext";
 
 export function PokemonProvider({ children }) {
   const [pokemonsContextData, setPokemonsContextData] = useState([]);
