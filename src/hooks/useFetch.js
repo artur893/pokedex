@@ -6,24 +6,26 @@ function useFetch(url) {
   const [isError, setIsError] = useState(false);
 
   const fetchData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-      const response = await fetch(url);
-      if (response.status === 404) {
-        setData(null);
-        return;
+    if (url) {
+      try {
+        setIsLoading(true);
+        setIsError(false);
+        const response = await fetch(url);
+        if (response.status === 404) {
+          setData(null);
+          return;
+        }
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        const json = await response.json();
+        setData(json);
+      } catch (error) {
+        console.error(error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
     }
   }, [url]);
 

@@ -25,7 +25,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   });
   const [photoId, setPhotoId] = useState(151);
   const { data: pokemonApi } = useFetch(
-    `http://localhost:3000/pokemons/${pokemon?.id}`,
+    pokemon ? `http://localhost:3000/pokemons/${pokemon?.id}` : null,
   );
   const { data: pokemonPhotoData } = useFetch(
     `https://pokeapi.co/api/v2/pokemon/${photoId}`,

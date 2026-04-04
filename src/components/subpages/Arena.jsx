@@ -13,10 +13,14 @@ function Arena() {
   const [isOver, setIsOver] = useState(false);
   const [winner, setWinner] = useState(null);
   const { data: pokemon1 } = useFetch(
-    `http://localhost:3000/pokemons/${arenaContextData[0]?.id}`,
+    arenaContextData[0]?.id
+      ? `http://localhost:3000/pokemons/${arenaContextData[0].id}`
+      : null,
   );
   const { data: pokemon2 } = useFetch(
-    `http://localhost:3000/pokemons/${arenaContextData[1]?.id}`,
+    arenaContextData[1]?.id
+      ? `http://localhost:3000/pokemons/${arenaContextData[1].id}`
+      : null,
   );
   const { send } = useRequest();
 
