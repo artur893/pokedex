@@ -119,6 +119,10 @@
       "exp": 1001,
       "photo": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png",
       "name": "Sara"
+    },
+    {
+      "id": "140",
+      "favorite": true
     }
   ]
 }

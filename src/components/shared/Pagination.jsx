@@ -44,7 +44,7 @@ function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
   return (
     <>
       {totalItems > 0 && (
-        <div className="flex items-center gap-1 self-center mt-4">
+        <div className="flex items-center gap-1 self-center my-4">
           {activePage !== 1 && (
             <Button
               isPill
