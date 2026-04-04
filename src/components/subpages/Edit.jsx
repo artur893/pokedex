@@ -58,9 +58,9 @@ function Edit() {
         >
           Stwórz pokemona
         </Button>
-        <table className="w-auto border-2">
+        <table className="w-auto border-2 border-slate-800 dark:border-gray-400">
           <thead>
-            <tr className="border-b">
+            <tr className="border-b border-slate-800 dark:border-gray-400">
               <th className="px-2 py-2 text-center">LP</th>
               <th className="px-2 py-2 text-left">Img</th>
               <th className="px-2 py-2 text-left">Nazwa</th>
@@ -69,7 +69,10 @@ function Edit() {
           </thead>
           <tbody>
             {mergedPokemons.map((pokemon, i) => (
-              <tr key={pokemon.id} className="border-b">
+              <tr
+                key={pokemon.id}
+                className="border-b border-slate-800 dark:border-gray-400"
+              >
                 <td className="px-2 py-2 text-center">{i + 1}</td>
                 <td className="px-2 py-2">
                   <img src={pokemon.photo} alt={pokemon.name} className="h-8" />

@@ -48,10 +48,10 @@ function Ranking() {
       </p>
     );
   return (
-    <div className="m-auto border-2 text-xs sm:text-base">
+    <div className="m-auto border-2 border-slate-800 dark:border-gray-400 text-xs sm:text-base">
       <table className="w-auto">
         <thead>
-          <tr className="border-b">
+          <tr className="border-b border-slate-800 dark:border-gray-400">
             <th className="sm:px-2 py-2 text-center">LP</th>
             <th className="sm:px-2 py-2 text-left">Img</th>
             <th className="sm:px-2 py-2 text-left">Nazwa</th>
@@ -83,7 +83,10 @@ function Ranking() {
         </thead>
         <tbody>
           {listToDisplay.map((pokemon, i) => (
-            <tr key={pokemon.id} className="border-b">
+            <tr
+              key={pokemon.id}
+              className="border-b border-slate-800 dark:border-gray-400"
+            >
               <td className="sm:px-2 py-2 text-center">{i + 1}</td>
               <td className="sm:px-2 py-2">
                 <img src={pokemon.photo} alt={pokemon.name} className="h-8" />
