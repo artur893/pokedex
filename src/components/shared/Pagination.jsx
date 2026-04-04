@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
-import { NavArrowRight, NavArrowLeft } from "iconoir-react";
+import { NavArrowLeft, NavArrowRight } from "iconoir-react";
+import { useEffect, useState } from "react";
 
 function Pagination({ totalItems, itemsOnPage, activePage, setPage }) {
   const totalPages = Math.ceil(totalItems / itemsOnPage);

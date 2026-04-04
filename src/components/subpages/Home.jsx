@@ -1,14 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { PokemonContext } from "../../context/PokemonContext";
 import { LoginContext } from "../../context/LoginContext";
-import usePokemon from "../../hooks/usePokemon";
-import PokemonCard from "../shared/PokemonCard";
-import Pagination from "../shared/Pagination";
-import { Input } from "@material-tailwind/react";
-import { useSearchParams } from "react-router";
-import { Link } from "react-router";
+import { PokemonContext } from "../../context/PokemonContext";
 import useFetch from "../../hooks/useFetch";
 import useMergePokemons from "../../hooks/useMergePokemons";
+import usePokemon from "../../hooks/usePokemon";
+import Pagination from "../shared/Pagination";
+import PokemonCard from "../shared/PokemonCard";
+import { Input } from "@material-tailwind/react";
+import { useContext, useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 
 function Home({ favorite }) {
   const [searchParams, setSearchParams] = useSearchParams();

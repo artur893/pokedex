@@ -1,11 +1,10 @@
-import logo from "../../icons/logo.png";
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router";
-import { Button, Switch } from "@material-tailwind/react";
-import { Collapse, List } from "@material-tailwind/react";
-import { NavArrowDown } from "iconoir-react";
-import { FaUser } from "react-icons/fa";
 import { LoginContext } from "../../context/LoginContext";
+import logo from "../../icons/logo.png";
+import { Button, Collapse, List, Switch } from "@material-tailwind/react";
+import { NavArrowDown } from "iconoir-react";
+import { useContext, useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
+import { Link } from "react-router";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

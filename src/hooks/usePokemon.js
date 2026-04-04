@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
+import { useContext, useEffect, useState } from "react";
 
 function usePokemon() {
   const [isLoading, setIsLoading] = useState(false);

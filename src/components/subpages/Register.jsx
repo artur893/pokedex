@@ -1,7 +1,7 @@
-import { Button, Input } from "@material-tailwind/react";
-import { useForm, useWatch } from "react-hook-form";
 import useRequest from "../../hooks/useRequest";
+import { Button, Input } from "@material-tailwind/react";
 import { useSnackbar } from "notistack";
+import { useForm, useWatch } from "react-hook-form";
 
 function Register() {
   const { send, isLoading } = useRequest();

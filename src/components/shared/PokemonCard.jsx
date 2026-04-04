@@ -1,7 +1,7 @@
+import { LoginContext } from "../../context/LoginContext";
 import logo from "../../icons/logo.png";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
-import { LoginContext } from "../../context/LoginContext";
 
 function PokemonCard({ pokemon, arena, handleDelete, opacity }) {
   const { user } = useContext(LoginContext);

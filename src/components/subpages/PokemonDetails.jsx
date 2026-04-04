@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import { PokemonContext } from "../../context/PokemonContext";
-import { LoginContext } from "../../context/LoginContext";
 import { ArenaContext } from "../../context/ArenaContext";
-import { useParams } from "react-router";
+import { LoginContext } from "../../context/LoginContext";
+import { PokemonContext } from "../../context/PokemonContext";
+import useFetch from "../../hooks/useFetch";
+import useMergePokemons from "../../hooks/useMergePokemons";
 import usePokemon from "../../hooks/usePokemon";
+import useRequest from "../../hooks/useRequest";
 import { HeartIcon as HeartEmpty } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartFull } from "@heroicons/react/24/solid";
 import { Sword } from "lucide-react";
-import useRequest from "../../hooks/useRequest";
-import useFetch from "../../hooks/useFetch";
-import useMergePokemons from "../../hooks/useMergePokemons";
+import { useContext } from "react";
+import { useParams } from "react-router";
 
 function PokemonDetails() {
   const { pokemonsContextData } = useContext(PokemonContext);

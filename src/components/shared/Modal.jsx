@@ -1,14 +1,12 @@
-import { Button, Input } from "@material-tailwind/react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import useRequest from "../../hooks/useRequest";
 import useFetch from "../../hooks/useFetch";
+import useRequest from "../../hooks/useRequest";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Button, Input } from "@material-tailwind/react";
 import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useState } from "react";
 
 function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   const {

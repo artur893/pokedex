@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { ArenaContext } from "./ArenaContext";
+import { useState } from "react";
 
 export function ArenaProvider({ children }) {
   const [arenaContextData, setArenaContextData] = useState([]);

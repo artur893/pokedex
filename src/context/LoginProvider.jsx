@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { LoginContext } from "./LoginContext";
+import { useState } from "react";
 
 export function LoginProvider({ children }) {
   const [user, setUser] = useState({

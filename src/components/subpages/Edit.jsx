@@ -1,12 +1,11 @@
-import { useContext } from "react";
-import { PokemonContext } from "../../context/PokemonContext";
-import usePokemon from "../../hooks/usePokemon";
-import useFetch from "../../hooks/useFetch";
 import { LoginContext } from "../../context/LoginContext";
+import { PokemonContext } from "../../context/PokemonContext";
+import useFetch from "../../hooks/useFetch";
 import useMergePokemons from "../../hooks/useMergePokemons";
-import { useState } from "react";
-import { Button } from "@material-tailwind/react";
+import usePokemon from "../../hooks/usePokemon";
 import Modal from "../shared/Modal";
+import { Button } from "@material-tailwind/react";
+import { useContext, useState } from "react";
 
 function Edit() {
   const [isModalOpen, setIsModalOpen] = useState(false);

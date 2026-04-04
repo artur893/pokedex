@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
-import { LoginContext } from "../../context/LoginContext";
 import { ArenaContext } from "../../context/ArenaContext";
-import PokemonCard from "../shared/PokemonCard";
-import { Button } from "@material-tailwind/react";
+import { LoginContext } from "../../context/LoginContext";
 import useFetch from "../../hooks/useFetch";
 import useRequest from "../../hooks/useRequest";
+import PokemonCard from "../shared/PokemonCard";
+import { Button } from "@material-tailwind/react";
+import { useContext, useState } from "react";
 
 function Arena() {
   const { user } = useContext(LoginContext);
