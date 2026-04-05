@@ -8,6 +8,26 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
+const numberValidation = {
+  required: "Pole wymagane",
+  min: {
+    value: 1,
+    message: "Liczba musi być dodatnia",
+  },
+  validate: {
+    isInteger: (value) =>
+      Number.isInteger(Number(value)) || "Liczba musi być całkowita",
+  },
+};
+
+const textValidation = {
+  required: "Pole wymagane",
+  minLength: {
+    value: 3,
+    message: "Nazwa musi mieć co najmniej 3 znaki",
+  },
+};
+
 function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   const {
     register,
@@ -22,37 +42,61 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
     },
   });
   const [photoId, setPhotoId] = useState(151);
-  const { data: pokemonApi } = useFetch(
-    pokemon ? `http://localhost:3000/pokemons/${pokemon?.id}` : null,
-  );
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const { data: pokemonPhotoData } = useFetch(
     `https://pokeapi.co/api/v2/pokemon/${photoId}`,
   );
   const { send } = useRequest();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const isPhotoUsed = dbPokemons.some((poke) => Number(poke.id) === photoId);
 
   useEffect(() => {
     reset({
-      height: pokemon?.height ?? null,
-      weight: pokemon?.weight ?? null,
-      exp: pokemon?.exp ?? null,
+      height: pokemon?.height ?? "",
+      weight: pokemon?.weight ?? "",
+      exp: pokemon?.exp ?? "",
     });
   }, [pokemon, reset]);
 
-  const onSubmit = async (formData) => {
-    if (pokemonApi) {
-      const json = await send(
-        `http://localhost:3000/pokemons/${pokemon.id}`,
-        "PATCH",
-        {
-          height: Number(formData.height),
-          weight: Number(formData.weight),
-          exp: Number(formData.exp),
-        },
-      );
-      if (json) {
-        enqueueSnackbar(`Zmieniono atrybuty ${pokemon.name}`, {
+  const handleEdit = async (formData) => {
+    const isSuccess = await send(
+      `http://localhost:3000/pokemons/${pokemon.id}`,
+      "PATCH",
+      {
+        height: Number(formData.height),
+        weight: Number(formData.weight),
+        exp: Number(formData.exp),
+      },
+    );
+    if (isSuccess) {
+      enqueueSnackbar(`Zmieniono atrybuty ${pokemon.name}`, {
+        variant: "success",
+      });
+      navigate("/home");
+    } else {
+      enqueueSnackbar(`Błąd edycji`, {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleCreate = async (formData) => {
+    if (isPhotoUsed) {
+      enqueueSnackbar(`Wybierz inną grafikę`, {
+        variant: "error",
+      });
+    } else {
+      const isSuccess = await send(`http://localhost:3000/pokemons`, "POST", {
+        id: Number(photoId),
+        name: formData.name,
+        height: Number(formData.height),
+        weight: Number(formData.weight),
+        exp: Number(formData.exp),
+        photo: pokemonPhotoData.sprites.other["official-artwork"].front_default,
+      });
+      if (isSuccess) {
+        enqueueSnackbar(`Dodano pokemona ${formData.name}`, {
           variant: "success",
         });
         navigate("/home");
@@ -61,43 +105,11 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
           variant: "error",
         });
       }
-    } else {
-      const isPhotoUsed = dbPokemons.some(
-        (poke) => Number(poke.id) === photoId,
-      );
-      if (isModalCreateMode && isPhotoUsed) {
-        enqueueSnackbar(`Wybierz inną grafikę`, {
-          variant: "error",
-        });
-      }
-      if (isModalCreateMode && !isPhotoUsed) {
-        const json = await send(`http://localhost:3000/pokemons`, "POST", {
-          id: isModalCreateMode ? String(photoId) : String(pokemon.id),
-          height: Number(formData.height),
-          weight: Number(formData.weight),
-          exp: Number(formData.exp),
-          ...(isModalCreateMode && {
-            photo:
-              pokemonPhotoData.sprites.other["official-artwork"].front_default,
-            name: formData.name,
-          }),
-        });
-
-        if (json) {
-          enqueueSnackbar(
-            `${isModalCreateMode ? `Dodano pokemona ${formData.name}` : `Zmieniono atrybuty ${pokemon.name}`}`,
-            {
-              variant: "success",
-            },
-          );
-          navigate("/home");
-        } else {
-          enqueueSnackbar(`Błąd edycji`, {
-            variant: "error",
-          });
-        }
-      }
     }
+  };
+
+  const onSubmit = async (formData) => {
+    isModalCreateMode ? handleCreate(formData) : handleEdit(formData);
   };
 
   return (
@@ -138,13 +150,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
                 <Input
                   type="text"
                   id="name"
-                  {...register("name", {
-                    required: "Pole wymagane",
-                    minLength: {
-                      value: 3,
-                      message: "Nazwa musi mieć co najmniej 3 znaki",
-                    },
-                  })}
+                  {...register("name", textValidation)}
                 />
                 <p className="text-xs text-red-500">{errors?.name?.message}</p>
               </div>
@@ -154,18 +160,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
               <Input
                 type="number"
                 id="height"
-                {...register("height", {
-                  required: "Pole wymagane",
-                  min: {
-                    value: 1,
-                    message: "Liczba musi być dodatnia",
-                  },
-                  validate: {
-                    isInteger: (value) =>
-                      Number.isInteger(Number(value)) ||
-                      "Liczba musi być całkowita",
-                  },
-                })}
+                {...register("height", numberValidation)}
               />
               <p className="text-xs text-red-500">{errors?.height?.message}</p>
             </div>
@@ -174,18 +169,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
               <Input
                 type="number"
                 id="weight"
-                {...register("weight", {
-                  required: "Pole wymagane",
-                  min: {
-                    value: 1,
-                    message: "Liczba musi być dodatnia",
-                  },
-                  validate: {
-                    isInteger: (value) =>
-                      Number.isInteger(Number(value)) ||
-                      "Liczba musi być całkowita",
-                  },
-                })}
+                {...register("weight", numberValidation)}
               />
               <p className="text-xs text-red-500">{errors?.weight?.message}</p>
             </div>
@@ -194,18 +178,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
               <Input
                 type="number"
                 id="exp"
-                {...register("exp", {
-                  required: "Pole wymagane",
-                  min: {
-                    value: 1,
-                    message: "Liczba musi być dodatnia",
-                  },
-                  validate: {
-                    isInteger: (value) =>
-                      Number.isInteger(Number(value)) ||
-                      "Liczba musi być całkowita",
-                  },
-                })}
+                {...register("exp", numberValidation)}
               />
               <p className="text-xs text-red-500">{errors?.exp?.message}</p>
             </div>
@@ -216,21 +189,28 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
                   <ArrowLeftIcon
                     className={`h-6 w-6 text-gray-700 hover:text-gray-500 ${photoId === 151 ? "opacity-0" : ""}`}
                     onClick={() => {
-                      if (photoId > 151) setPhotoId((prev) => prev - 1);
+                      if (photoId > 151) {
+                        setIsImageLoading(true);
+                        setPhotoId((prev) => prev - 1);
+                      }
                     }}
                   />
                   <img
-                    className={`w-40 m-auto ${dbPokemons.some((poke) => Number(poke.id) === photoId) ? "opacity-30" : ""}`}
+                    className={`w-40 m-auto ${isImageLoading ? "opacity-0" : isPhotoUsed ? "opacity-30" : ""}`}
                     src={
                       pokemonPhotoData.sprites.other["official-artwork"]
                         .front_default
                     }
                     alt={pokemonPhotoData.name}
+                    onLoad={() => setIsImageLoading(false)}
                   />
                   <ArrowRightIcon
                     className={`h-6 w-6 text-gray-700 hover:text-gray-500 ${photoId === 1025 ? "opacity-0" : ""}`}
                     onClick={() => {
-                      if (photoId < 1025) setPhotoId((prev) => prev + 1);
+                      if (photoId < 1025) {
+                        setIsImageLoading(true);
+                        setPhotoId((prev) => prev + 1);
+                      }
                     }}
                   />
                 </div>

@@ -9,23 +9,21 @@ function useRequest() {
     try {
       setIsLoading(true);
       setIsError(false);
-
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
       if (!response.ok) {
         throw new Error(`${method} error`);
       }
-
       const json = await response.json();
       setData(json);
-      return json;
+      return response.ok;
     } catch (error) {
       console.error(error);
       setIsError(true);
+      return false;
     } finally {
       setIsLoading(false);
     }
