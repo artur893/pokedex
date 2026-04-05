@@ -12,6 +12,17 @@ function Navbar() {
     () => localStorage.getItem("isDark") === "true",
   );
   const { user, setUser } = useContext(LoginContext);
+  const authLinks = [
+    { to: "favorite", label: "Ulubione" },
+    { to: "arena", label: "Arena" },
+    { to: "ranking", label: "Ranking" },
+    { to: "edit", label: "Edycja" },
+    { to: "login", label: "Wyloguj", onClick: logout },
+  ];
+  const unAuthLinks = [
+    { to: "login", label: "Zaloguj" },
+    { to: "register", label: "Zarejestruj" },
+  ];
 
   useEffect(() => {
     if (isDark) {
@@ -23,9 +34,9 @@ function Navbar() {
     }
   }, [isDark]);
 
-  const logout = () => {
+  function logout() {
     setUser(null);
-  };
+  }
 
   return (
     <>
@@ -47,35 +58,11 @@ function Navbar() {
           </List.Item>
           <Collapse open={isOpen}>
             <List className="min-w-48">
-              {user ? (
-                <>
-                  <Link to="favorite">
-                    <List.Item>Ulubione</List.Item>
-                  </Link>
-                  <Link to="arena">
-                    <List.Item>Arena</List.Item>
-                  </Link>
-                  <Link to="ranking">
-                    <List.Item>Ranking</List.Item>
-                  </Link>
-                  <Link to="edit">
-                    <List.Item>Edycja</List.Item>
-                  </Link>
-                  <Link to="login">
-                    <List.Item onClick={logout}>Wyloguj</List.Item>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="login">
-                    <List.Item>Zaloguj</List.Item>
-                  </Link>
-                  <Link to="register">
-                    <List.Item>Zarejestruj</List.Item>
-                  </Link>
-                </>
-              )}
-
+              {(user ? authLinks : unAuthLinks).map((link) => (
+                <Link key={link.to} to={link.to}>
+                  <List.Item onClick={link.onClick}>{link.label}</List.Item>
+                </Link>
+              ))}
               <List.Item>
                 <Switch
                   checked={isDark}
@@ -103,36 +90,13 @@ function Navbar() {
             )}
           </div>
           <nav className="hidden sm:flex gap-4">
-            {user ? (
-              <>
-                <Link to="favorite">
-                  <Button variant="solid">Ulubione</Button>
-                </Link>
-                <Link to="arena">
-                  <Button variant="solid">Arena</Button>
-                </Link>
-                <Link to="ranking">
-                  <Button variant="solid">Ranking</Button>
-                </Link>
-                <Link to="edit">
-                  <Button variant="solid">Edycja</Button>
-                </Link>
-                <Link to="login">
-                  <Button variant="solid" onClick={logout}>
-                    Wyloguj
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="login">
-                  <Button variant="solid">Zaloguj</Button>
-                </Link>
-                <Link to="register">
-                  <Button variant="solid">Zarejestruj</Button>
-                </Link>
-              </>
-            )}
+            {(user ? authLinks : unAuthLinks).map((link) => (
+              <Link key={link.to} to={link.to}>
+                <Button variant="solid" onClick={link.onClick}>
+                  {link.label}
+                </Button>
+              </Link>
+            ))}
           </nav>
         </div>
       </header>
