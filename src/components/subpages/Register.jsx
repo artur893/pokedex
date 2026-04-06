@@ -2,10 +2,12 @@ import useRequest from "../../hooks/useRequest";
 import { Button, Input } from "@material-tailwind/react";
 import { useSnackbar } from "notistack";
 import { useForm, useWatch } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 function Register() {
   const { send, isLoading } = useRequest();
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -39,6 +41,7 @@ function Register() {
         enqueueSnackbar("Coś poszło nie tak", { variant: "error" });
       } else {
         enqueueSnackbar("Pomyślnie utworzono konto", { variant: "success" });
+        navigate("/login");
       }
     } else if (isNameExist.length > 0) {
       enqueueSnackbar("Login jest zajęty", { variant: "error" });

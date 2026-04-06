@@ -49,7 +49,7 @@ function Arena() {
     }
   };
 
-  const handleBattle = () => {
+  const handleBattle = async () => {
     const powerPokemon1 =
       (pokemon1?.exp || arenaContextData[0].exp) + arenaContextData[0].weight;
     const powerPokemon2 =
@@ -60,16 +60,16 @@ function Arena() {
       return;
     }
     if (powerPokemon1 > powerPokemon2) {
-      handleUpdateDB(pokemon1, 0, true);
-      handleUpdateDB(pokemon2, 1, false);
+      await handleUpdateDB(pokemon1, 0, true);
+      await handleUpdateDB(pokemon2, 1, false);
       setMessage(`${arenaContextData[0].name} won`);
       setWinner(1);
       setIsOver(true);
       return;
     }
     if (powerPokemon1 < powerPokemon2) {
-      handleUpdateDB(pokemon1, 0, false);
-      handleUpdateDB(pokemon2, 1, true);
+      await handleUpdateDB(pokemon1, 0, false);
+      await handleUpdateDB(pokemon2, 1, true);
       setMessage(`${arenaContextData[1].name} won`);
       setWinner(2);
       setIsOver(true);

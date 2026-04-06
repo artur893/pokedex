@@ -50,6 +50,9 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const isPhotoUsed = dbPokemons.some((poke) => Number(poke.id) === photoId);
+  const existInDb = dbPokemons.some(
+    (poke) => Number(poke?.id) === Number(pokemon?.id),
+  );
 
   useEffect(() => {
     reset({
@@ -60,15 +63,25 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   }, [pokemon, reset]);
 
   const handleEdit = async (formData) => {
-    const isSuccess = await send(
-      `http://localhost:3000/pokemons/${pokemon.id}`,
-      "PATCH",
-      {
+    let isSuccess;
+    if (existInDb) {
+      isSuccess = await send(
+        `http://localhost:3000/pokemons/${pokemon.id}`,
+        "PATCH",
+        {
+          height: Number(formData.height),
+          weight: Number(formData.weight),
+          exp: Number(formData.exp),
+        },
+      );
+    } else {
+      isSuccess = await send(`http://localhost:3000/pokemons`, "POST", {
+        id: String(pokemon.id),
         height: Number(formData.height),
         weight: Number(formData.weight),
         exp: Number(formData.exp),
-      },
-    );
+      });
+    }
     if (isSuccess) {
       enqueueSnackbar(`Zmieniono atrybuty ${pokemon.name}`, {
         variant: "success",
@@ -88,7 +101,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
       });
     } else {
       const isSuccess = await send(`http://localhost:3000/pokemons`, "POST", {
-        id: Number(photoId),
+        id: String(photoId),
         name: formData.name,
         height: Number(formData.height),
         weight: Number(formData.weight),

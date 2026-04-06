@@ -13,25 +13,26 @@ import { useParams } from "react-router";
 
 function PokemonDetails() {
   const { pokemonsContextData } = useContext(PokemonContext);
-  const { data: dbPokemons } = useFetch("http://localhost:3000/pokemons");
+  const { data: dbPokemons, refetch } = useFetch(
+    "http://localhost:3000/pokemons",
+  );
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
   const { user } = useContext(LoginContext);
   const { arenaContextData, setArenaContextData } = useContext(ArenaContext);
   const { id } = useParams();
   const { isLoading, isError } = usePokemon();
-  const { data, refetch } = useFetch(`http://localhost:3000/pokemons/${id}`);
   const { send } = useRequest();
   const pokemon = mergedPokemons.find((poke) => Number(poke.id) === Number(id));
 
   const handleFavorite = async () => {
-    if (data) {
+    if (dbPokemons.find((poke) => Number(poke.id) === Number(id))) {
       await send(`http://localhost:3000/pokemons/${id}`, "PATCH", {
-        favorite: !data.favorite,
+        favorite: pokemon.favorite ? !pokemon.favorite : true,
       });
       refetch();
     } else {
       await send(`http://localhost:3000/pokemons`, "POST", {
-        id: id,
+        id: String(id),
         favorite: true,
       });
       refetch();
@@ -80,12 +81,14 @@ function PokemonDetails() {
               <div>
                 <p className="text-center text-sm font-bold">Experience</p>
                 <p className="text-center text-sm">
-                  {data?.exp && user ? data.exp : pokemon.exp}
+                  {pokemon?.exp && user ? pokemon.exp : pokemon.exp}
                 </p>
               </div>
               <div>
                 <p className="text-center text-sm font-bold">Ability</p>
-                <p className="text-center text-sm">{pokemon.ability}</p>
+                <p className="text-center text-sm">
+                  {pokemon.ability ?? "none"}
+                </p>
               </div>
             </div>
           </div>
@@ -95,7 +98,7 @@ function PokemonDetails() {
                 onClick={handleFavorite}
                 className="absolute top-4 right-4"
               >
-                {data?.favorite ? (
+                {pokemon?.favorite ? (
                   <HeartFull className="w-8 h-8 text-red-500" />
                 ) : (
                   <HeartEmpty className="w-8 h-8 text-gray-500" />
@@ -108,9 +111,9 @@ function PokemonDetails() {
                 <span className="self-center mr-2">{`${arenaContextData.length} / 2`}</span>
                 <Sword className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
               </button>
-              {data?.win || data?.lose ? (
+              {pokemon?.win || pokemon?.lose ? (
                 <div className="absolute bottom-0 left-0 p-1 border-2 border-current rounded-bl-lg rounded-tr-lg">
-                  W: {data.win} | L: {data.lose}
+                  W: {pokemon.win} | L: {pokemon.lose}
                 </div>
               ) : (
                 ""
