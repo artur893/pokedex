@@ -1,16 +1,105 @@
-# React + Vite
+# Pokedex (EN)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a simple Pokedex application built with React + Vite and a local API powered by `json-server`.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Description & Features](#description--features)
+- [Technologies](#technologies)
+- [Quick Start](#quick-start)
 
-## React Compiler
+## Description & Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- List Pokémon with pagination
+- Pokémon detail page
+- Forms: register and login
+- Arena for Pokémon battles
+- Ranking and edit screens
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- Tailwind CSS
+- json-server
+- ESLint + Prettier
+
+## Quick Start
+
+Requirements:
+
+- Node.js
+- npm
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the app and the local API together:
+
+```bash
+npm run start
+```
+
+Or run them separately:
+
+```bash
+npm run dev      # Vite dev server
+npm run server   # json-server at http://localhost:3000
+```
+
+---
+
+# Pokedex (PL)
+
+To repozytorium zawiera prostą aplikację Pokedex napisaną w React + Vite oraz lokalny serwer API oparty na `json-server`.
+
+## Spis treści
+
+- [Opis i funkcjonalności](#opis-i-funkcjonalności)
+- [Technologie](#technologie)
+- [Szybki start](#szybki-start)
+
+## Opis i funkcjonalności
+
+- Wyświetlanie listy Pokémonów z paginacją
+- Strona szczegółów pojedynczego Pokémona
+- Formularze: rejestracja i logowanie
+- Arena do bitew Pokémonów
+- Ekrany rankingów oraz edycji danych
+
+## Technologie
+
+- React
+- Vite
+- Tailwind CSS
+- json-server
+- ESLint + Prettier
+
+## Szybki start
+
+Wymagania:
+
+- Node.js
+- npm
+
+Instalacja zależności:
+
+```bash
+npm install
+```
+
+Uruchomienie aplikacji i lokalnego API równocześnie:
+
+```bash
+npm run start
+```
+
+Alternatywnie uruchom serwery osobno:
+
+```bash
+npm run dev      # Vite dev server
+npm run server   # json-server na http://localhost:3000
+```
