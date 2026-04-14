@@ -1,16 +1,128 @@
-# React + Vite
+## Pokedex (PL)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kompletny projekt Pokedex zbudowany w React z lokalnym API (`json-server`). Zawiera CRUD, autoryzację, paginację, wyszukiwanie, logikę walki na arenie i integrację z zewnętrznym API (PokeAPI).
 
-Currently, two official plugins are available:
+## Zawartość repozytorium
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Aplikacja frontendowa (React + Tailwind)
+- Lokalny serwer API oparty na `json-server`
 
-## React Compiler
+## Najważniejsze funkcje
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Lista Pokémonów z paginacją i wyszukiwarką
+- Strona szczegółów Pokémona
+- Rejestracja i logowanie
+- Formularze walidowane przez `react-hook-form`
+- Arena: walka dwóch Pokémonów, zapis wyników w lokalnym API
+- Ranking: sortowalna tabela
+- Edytor / tworzenie Pokémona z możliwością wyboru grafiki z PokeAPI
+- Tryb ciemny
+- Komunikaty (notistack)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech stack
+
+- Frontend: React, Vite, Tailwind CSS
+- API: json-server (lokalny)
+- Biblioteki: `react-hook-form`, `react-router`, `tailwind`, `notistack`
+- Dev: ESLint, Prettier
+
+---
+
+## Podgląd
+
+## [Pokedex](https://pokedex--arthal893.replit.app)
+
+---
+
+## Szybki start (lokalnie)
+
+Wymagania: `Node.js` i `npm`.
+
+1. Zainstaluj zależności:
+
+```bash
+npm install
+```
+
+2. Uruchom frontend i lokalne API równocześnie:
+
+```bash
+npm run start
+```
+
+Alternatywnie uruchom je osobno:
+
+```bash
+npm run dev    # uruchamia Vite (frontend)
+npm run server # uruchamia json-server na http://localhost:3000
+```
+
+Po uruchomieniu frontend jest dostępny zwykle pod `http://localhost:5173`, a API pod `http://localhost:3000`.
+
+---
+
+## Pokedex (EN)
+
+A complete Pokédex project built with React and a local API (`json-server`).
+It includes full CRUD functionality, authentication, pagination, search, battle logic for the arena, and integration with the external PokeAPI.
+
+## Repository Contents
+
+- Frontend application (React + Tailwind)
+- Local API server powered by `json-server`
+
+## Key Features
+
+- Pokémon list with pagination and search
+- Pokémon detail page
+- User registration and login
+- Forms validated with `react-hook-form`
+- Arena: battle between two Pokémon with results saved to the local API
+- Ranking: sortable leaderboard
+- Pokémon editor/creator with image selection from PokeAPI
+- Dark mode
+- Notifications (notistack)
+
+---
+
+## Tech stack
+
+- Frontend: React, Vite, Tailwind CSS
+- API: json-server (local)
+- Libraries: `react-hook-form`, `react-router`, `tailwind`, `notistack`
+- Dev: ESLint, Prettier
+
+---
+
+## Live preview
+
+## [Pokedex](https://pokedex--arthal893.replit.app)
+
+---
+
+## Quick Start (Local)
+
+Requirements: `Node.js` and `npm`.
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the frontend and local API simultaneously:
+
+```bash
+npm run start
+```
+
+Alternatively, run them separately:
+
+```bash
+npm run dev    # starts Vite (frontend)
+npm run server # starts json-server at http://localhost:3000
+```
+
+After launching, the frontend is usually available at `http://localhost:5173`, and the API at `http://localhost:3000`.

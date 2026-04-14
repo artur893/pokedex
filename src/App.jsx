@@ -1,20 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "@material-tailwind/react";
+import Navbar from "./components/shared/Navbar";
+import { Outlet } from "react-router";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="solid">Solid</Button>
-      <Button variant="gradient">Gradient</Button>
-    </>
+    <div className="flex flex-col bg-gray-300 dark:bg-slate-800 text-gray-800 dark:text-slate-200 min-h-screen">
+      <Navbar />
+      <Outlet />
+    </div>
   );
 }
 
