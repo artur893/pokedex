@@ -30,6 +30,12 @@ Kompletny projekt Pokedex zbudowany w React z lokalnym API (`json-server`). Zawi
 
 ---
 
+## Podgląd
+
+## [Pokedex](https://pokedex--arthal893.replit.app)
+
+---
+
 ## Szybki start (lokalnie)
 
 Wymagania: `Node.js` i `npm`.
@@ -87,6 +93,12 @@ It includes full CRUD functionality, authentication, pagination, search, battle 
 - API: json-server (local)
 - Libraries: `react-hook-form`, `react-router`, `tailwind`, `notistack`
 - Dev: ESLint, Prettier
+
+---
+
+## Live preview
+
+## [Pokedex](https://pokedex--arthal893.replit.app)
 
 ---
 
