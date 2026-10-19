@@ -32,7 +32,9 @@ Kompletny projekt Pokedex zbudowany w React z lokalnym API (`json-server`). Zawi
 
 ## Podgląd
 
-## [Pokedex](https://pokedex--arthal893.replit.app)
+## [Pokedex](https://pokedex-halemba.vercel.app)
+
+W wersji demo nie ma `json-server`: te same zapytania obsługuje moduł `src/api/apiFetch.js`, który zapisuje dane w `localStorage` przeglądarki. Każdy odwiedzający ma więc własne konta i wyniki.
 
 ---
 
@@ -98,7 +100,9 @@ It includes full CRUD functionality, authentication, pagination, search, battle 
 
 ## Live preview
 
-## [Pokedex](https://pokedex--arthal893.replit.app)
+## [Pokedex](https://pokedex-halemba.vercel.app)
+
+The demo runs without `json-server`: the same requests are handled by `src/api/apiFetch.js`, which stores data in the browser's `localStorage`. Every visitor gets their own accounts and results.
 
 ---
 
