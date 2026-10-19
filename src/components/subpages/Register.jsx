@@ -1,3 +1,4 @@
+import { API_URL, apiFetch } from "../../api/apiFetch";
 import useRequest from "../../hooks/useRequest";
 import { Button, Input } from "@material-tailwind/react";
 import { useSnackbar } from "notistack";
@@ -22,17 +23,17 @@ function Register() {
   });
 
   const onSubmit = async (formData) => {
-    const isNameResponse = await fetch(
-      `http://localhost:3000/users?name=${formData.name}`,
+    const isNameResponse = await apiFetch(
+      `${API_URL}/users?name=${formData.name}`,
     );
     const isNameExist = await isNameResponse.json();
-    const isEmailResponse = await fetch(
-      `http://localhost:3000/users?email=${formData.email}`,
+    const isEmailResponse = await apiFetch(
+      `${API_URL}/users?email=${formData.email}`,
     );
     const isEmailExist = await isEmailResponse.json();
 
     if (isNameExist.length === 0 && isEmailExist.length === 0) {
-      const response = await send("http://localhost:3000/users", "POST", {
+      const response = await send(`${API_URL}/users`, "POST", {
         name: formData.name,
         email: formData.email,
         password: formData.password,

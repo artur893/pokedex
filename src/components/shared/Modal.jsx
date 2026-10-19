@@ -1,3 +1,4 @@
+import { API_URL } from "../../api/apiFetch";
 import useFetch from "../../hooks/useFetch";
 import useRequest from "../../hooks/useRequest";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -65,17 +66,13 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
   const handleEdit = async (formData) => {
     let isSuccess;
     if (existInDb) {
-      isSuccess = await send(
-        `http://localhost:3000/pokemons/${pokemon.id}`,
-        "PATCH",
-        {
-          height: Number(formData.height),
-          weight: Number(formData.weight),
-          exp: Number(formData.exp),
-        },
-      );
+      isSuccess = await send(`${API_URL}/pokemons/${pokemon.id}`, "PATCH", {
+        height: Number(formData.height),
+        weight: Number(formData.weight),
+        exp: Number(formData.exp),
+      });
     } else {
-      isSuccess = await send(`http://localhost:3000/pokemons`, "POST", {
+      isSuccess = await send(`${API_URL}/pokemons`, "POST", {
         id: String(pokemon.id),
         height: Number(formData.height),
         weight: Number(formData.weight),
@@ -100,7 +97,7 @@ function Modal({ isOpen, setIsOpen, isModalCreateMode, pokemon, dbPokemons }) {
         variant: "error",
       });
     } else {
-      const isSuccess = await send(`http://localhost:3000/pokemons`, "POST", {
+      const isSuccess = await send(`${API_URL}/pokemons`, "POST", {
         id: String(photoId),
         name: formData.name,
         height: Number(formData.height),

@@ -1,3 +1,4 @@
+import { API_URL } from "../../api/apiFetch";
 import { LoginContext } from "../../context/LoginContext";
 import { PokemonContext } from "../../context/PokemonContext";
 import useFetch from "../../hooks/useFetch";
@@ -18,7 +19,7 @@ function Edit() {
     data: dbPokemons,
     isLoading: isLoadingDb,
     isError: isErrorDb,
-  } = useFetch("http://localhost:3000/pokemons");
+  } = useFetch(`${API_URL}/pokemons`);
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
 
   if (isLoading || isLoadingDb)

@@ -1,3 +1,4 @@
+import { API_URL, apiFetch } from "../api/apiFetch";
 import { useState } from "react";
 
 function useLogin() {
@@ -9,13 +10,9 @@ function useLogin() {
     try {
       setIsLoading(true);
       setIsError(false);
-      const loginRes = await fetch(
-        `http://localhost:3000/users?login=${identifier}`,
-      );
+      const loginRes = await apiFetch(`${API_URL}/users?login=${identifier}`);
       const loginUser = await loginRes.json();
-      const emailRes = await fetch(
-        `http://localhost:3000/users?email=${identifier}`,
-      );
+      const emailRes = await apiFetch(`${API_URL}/users?email=${identifier}`);
       const emailUser = await emailRes.json();
       const userRecord = [...loginUser, ...emailUser][0];
 

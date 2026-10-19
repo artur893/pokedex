@@ -1,3 +1,4 @@
+import { API_URL } from "../../api/apiFetch";
 import { ArenaContext } from "../../context/ArenaContext";
 import { LoginContext } from "../../context/LoginContext";
 import useFetch from "../../hooks/useFetch";
@@ -14,31 +15,27 @@ function Arena() {
   const [winner, setWinner] = useState(null);
   const { data: pokemon1 } = useFetch(
     arenaContextData[0]?.id
-      ? `http://localhost:3000/pokemons/${arenaContextData[0].id}`
+      ? `${API_URL}/pokemons/${arenaContextData[0].id}`
       : null,
   );
   const { data: pokemon2 } = useFetch(
     arenaContextData[1]?.id
-      ? `http://localhost:3000/pokemons/${arenaContextData[1].id}`
+      ? `${API_URL}/pokemons/${arenaContextData[1].id}`
       : null,
   );
   const { send } = useRequest();
 
   const handleUpdateDB = async (data, index, won) => {
     if (data) {
-      await send(
-        `http://localhost:3000/pokemons/${arenaContextData[index].id}`,
-        "PATCH",
-        {
-          win: won ? (data.win ?? 0) + 1 : (data.win ?? 0),
-          lose: won ? (data.lose ?? 0) : (data.lose ?? 0) + 1,
-          exp: won
-            ? arenaContextData[index].exp + 10
-            : arenaContextData[index].exp,
-        },
-      );
+      await send(`${API_URL}/pokemons/${arenaContextData[index].id}`, "PATCH", {
+        win: won ? (data.win ?? 0) + 1 : (data.win ?? 0),
+        lose: won ? (data.lose ?? 0) : (data.lose ?? 0) + 1,
+        exp: won
+          ? arenaContextData[index].exp + 10
+          : arenaContextData[index].exp,
+      });
     } else {
-      await send(`http://localhost:3000/pokemons`, "POST", {
+      await send(`${API_URL}/pokemons`, "POST", {
         id: String(arenaContextData[index].id),
         win: won ? 1 : 0,
         lose: won ? 0 : 1,

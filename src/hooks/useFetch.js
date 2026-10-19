@@ -1,3 +1,4 @@
+import { apiFetch } from "../api/apiFetch";
 import { useCallback, useEffect, useState } from "react";
 
 function useFetch(url) {
@@ -10,7 +11,7 @@ function useFetch(url) {
       try {
         setIsLoading(true);
         setIsError(false);
-        const response = await fetch(url);
+        const response = await apiFetch(url);
         if (response.status === 404) {
           setData(null);
           return;

@@ -1,3 +1,4 @@
+import { API_URL } from "../../api/apiFetch";
 import { ArenaContext } from "../../context/ArenaContext";
 import { LoginContext } from "../../context/LoginContext";
 import { PokemonContext } from "../../context/PokemonContext";
@@ -13,9 +14,7 @@ import { useParams } from "react-router";
 
 function PokemonDetails() {
   const { pokemonsContextData } = useContext(PokemonContext);
-  const { data: dbPokemons, refetch } = useFetch(
-    "http://localhost:3000/pokemons",
-  );
+  const { data: dbPokemons, refetch } = useFetch(`${API_URL}/pokemons`);
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
   const { user } = useContext(LoginContext);
   const { arenaContextData, setArenaContextData } = useContext(ArenaContext);
@@ -26,12 +25,12 @@ function PokemonDetails() {
 
   const handleFavorite = async () => {
     if (dbPokemons.find((poke) => Number(poke.id) === Number(id))) {
-      await send(`http://localhost:3000/pokemons/${id}`, "PATCH", {
+      await send(`${API_URL}/pokemons/${id}`, "PATCH", {
         favorite: pokemon.favorite ? !pokemon.favorite : true,
       });
       refetch();
     } else {
-      await send(`http://localhost:3000/pokemons`, "POST", {
+      await send(`${API_URL}/pokemons`, "POST", {
         id: String(id),
         favorite: true,
       });

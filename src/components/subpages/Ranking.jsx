@@ -1,3 +1,4 @@
+import { API_URL } from "../../api/apiFetch";
 import { LoginContext } from "../../context/LoginContext";
 import { PokemonContext } from "../../context/PokemonContext";
 import useFetch from "../../hooks/useFetch";
@@ -14,7 +15,7 @@ function Ranking() {
     data: dbPokemons,
     isLoading: isLoadingDb,
     isError: isErrorDb,
-  } = useFetch("http://localhost:3000/pokemons");
+  } = useFetch(`${API_URL}/pokemons`);
   const mergedPokemons = useMergePokemons(pokemonsContextData, dbPokemons);
   const [sortDescending, setSortDescending] = useState(true);
   const listToDisplay = pokemons ?? mergedPokemons;

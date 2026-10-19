@@ -1,3 +1,4 @@
+import { apiFetch } from "../api/apiFetch";
 import { useState } from "react";
 
 function useRequest() {
@@ -9,7 +10,7 @@ function useRequest() {
     try {
       setIsLoading(true);
       setIsError(false);
-      const response = await fetch(url, {
+      const response = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
