@@ -1,0 +1,22 @@
+function useMergePokemons(apiPokemons, dbPokemons) {
+  if (!apiPokemons) return [];
+  if (!dbPokemons) return apiPokemons;
+  const mergedList = apiPokemons.map((apiPokemon) => {
+    const dbPokemon = dbPokemons.find(
+      (dbPokemon) => Number(dbPokemon.id) === Number(apiPokemon.id),
+    );
+
+    return { ...apiPokemon, ...dbPokemon };
+  });
+
+  for (const poke of dbPokemons) {
+    const isExists = mergedList.some(
+      (mergedPoke) => Number(poke.id) === Number(mergedPoke.id),
+    );
+    if (!isExists) mergedList.push(poke);
+  }
+
+  return mergedList;
+}
+
+export default useMergePokemons;
